@@ -1,0 +1,233 @@
+/* =========================================================
+   google.com 재현
+   색·치수는 실제 구글 값을 그대로 쓴다.
+   ========================================================= */
+
+:root {
+  --g-blue: #4285f4;
+  --g-red: #ea4335;
+  --g-yellow: #fbbc05;
+  --g-green: #34a853;
+
+  --link: #1a0dab;
+  --link-visited: #681da8;
+  --url-text: #202124;
+  --url-sub: #4d5156;
+  --snippet: #4d5156;
+
+  --bg: #ffffff;
+  --text: #202124;
+  --text-2: #3c4043;
+  --muted: #70757a;
+  --icon: #9aa0a6;
+
+  --box-border: #dfe1e5;
+  --box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  --btn-bg: #f8f9fa;
+  --btn-border: #f8f9fa;
+  --btn-border-hover: #dadce0;
+  --btn-text: #3c4043;
+  --divider: #ebebeb;
+  --foot-bg: #f2f2f2;
+  --foot-border: #e4e4e4;
+
+  --sans: arial, 'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  --wordmark: 'Poppins', arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --link: #99c3ff;
+    --link-visited: #c58af9;
+    --url-text: #dadce0;
+    --url-sub: #bdc1c6;
+    --snippet: #bdc1c6;
+
+    --bg: #202124;
+    --text: #e8eaed;
+    --text-2: #dadce0;
+    --muted: #9aa0a6;
+    --icon: #9aa0a6;
+
+    --box-border: #5f6368;
+    --box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.5);
+    --btn-bg: #303134;
+    --btn-border: #303134;
+    --btn-border-hover: #5f6368;
+    --btn-text: #e8eaed;
+    --divider: #3c4043;
+    --foot-bg: #171717;
+    --foot-border: #3c4043;
+  }
+}
+
+* { box-sizing: border-box; }
+body, h1, h2, h3, p, ul, ol, figure, pre { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img, svg { display: block; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--g-blue); outline-offset: 2px; }
+
+/* ---------- 워드마크 ---------- */
+.wordmark {
+  font-family: var(--wordmark);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  user-select: none;
+}
+.wordmark span:nth-child(6n + 1) { color: var(--g-blue); }
+.wordmark span:nth-child(6n + 2) { color: var(--g-red); }
+.wordmark span:nth-child(6n + 3) { color: var(--g-yellow); }
+.wordmark span:nth-child(6n + 4) { color: var(--g-blue); }
+.wordmark span:nth-child(6n + 5) { color: var(--g-green); }
+.wordmark span:nth-child(6n + 6) { color: var(--g-red); }
+
+/* ---------- 상단바 ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 6px 15px 0 15px;
+  height: 60px;
+  font-size: 13px;
+}
+.topbar a.tlink { color: var(--text); padding: 0 4px; }
+.topbar a.tlink:hover { text-decoration: underline; }
+.apps {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.apps:hover { background: rgba(60, 64, 67, 0.08); }
+.signin {
+  background: #1a73e8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 9px 23px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+.signin:hover { background: #2b7de9; box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3); }
+
+/* ---------- 검색창 ---------- */
+.searchbox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 584px;
+  height: 44px;
+  border: 1px solid var(--box-border);
+  border-radius: 24px;
+  padding: 0 8px 0 14px;
+  background: var(--bg);
+}
+.searchbox:hover,
+.searchbox:focus-within {
+  border-color: transparent;
+  box-shadow: var(--box-shadow);
+}
+.searchbox .ico-search { color: var(--icon); margin-right: 13px; flex-shrink: 0; }
+.searchbox input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+}
+.searchbox .tools { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+.searchbox .tools button {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: none; border: 0; cursor: pointer; border-radius: 50%;
+}
+.searchbox .tools button:hover { background: rgba(60, 64, 67, 0.08); }
+
+/* ---------- 첫 화면 ---------- */
+.home-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 12vh;
+}
+.home-logo {
+  font-size: 88px;
+  line-height: 1;
+  margin-bottom: 26px;
+}
+.home-form { width: 100%; max-width: 584px; display: flex; flex-direction: column; align-items: center; }
+.home-buttons { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
+.gbtn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: 4px;
+  color: var(--btn-text);
+  font-family: var(--sans);
+  font-size: 14px;
+  height: 36px;
+  min-width: 54px;
+  padding: 0 16px;
+  cursor: pointer;
+  line-height: 27px;
+}
+.gbtn:hover {
+  border-color: var(--btn-border-hover);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  color: var(--text);
+}
+.home-note { margin-top: 30px; font-size: 14px; color: var(--text-2); }
+.home-note a { color: var(--link); }
+.home-note a:hover { text-decoration: underline; }
+
+/* ---------- 푸터 ---------- */
+.foot {
+  background: var(--foot-bg);
+  border-top: 1px solid var(--foot-border);
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: auto;
+}
+.foot .region { padding: 15px 30px; border-bottom: 1px solid var(--foot-border); }
+.foot .row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+.foot .row ul { display: flex; flex-wrap: wrap; }
+.foot .row a { display: block; padding: 15px 12px; }
+.foot .row a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .home-logo { font-size: 58px; }
+  .home-main { margin-top: 8vh; }
+  .foot .row { justify-content: center; }
+  .topbar { gap: 8px; padding: 6px 10px 0; }
+  .signin { padding: 8px 14px; }
+}

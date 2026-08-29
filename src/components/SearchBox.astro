@@ -1,0 +1,22 @@
+---
+import Icons from './Icons.astro';
+import { url } from '../lib/url';
+interface Props { value?: string; autofocus?: boolean; }
+const { value = '', autofocus = false } = Astro.props;
+---
+<form class="searchbox" action={url("/search")} method="get" role="search">
+  <Icons name="search" size={20} />
+  <input
+    type="text"
+    name="q"
+    value={value}
+    autocomplete="off"
+    spellcheck="false"
+    aria-label="검색"
+    autofocus={autofocus}
+  />
+  <span class="tools">
+    <button type="button" title="음성 검색 (장식)" aria-label="음성 검색"><Icons name="mic" size={24} /></button>
+    <button type="button" title="이미지 검색 (장식)" aria-label="이미지 검색"><Icons name="lens" size={24} /></button>
+  </span>
+</form>

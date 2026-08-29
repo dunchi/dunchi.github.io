@@ -1,0 +1,9 @@
+---
+import { SITE } from '../consts';
+interface Props { text?: string; }
+const { text = SITE.title } = Astro.props;
+const letters = [...text];
+---
+<span class="wordmark" aria-label={text}>
+  {letters.map((ch) => <span aria-hidden="true">{ch}</span>)}
+</span>

@@ -1,0 +1,49 @@
+---
+import Shell from '../layouts/Shell.astro';
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+import SearchBox from '../components/SearchBox.astro';
+import Wordmark from '../components/Wordmark.astro';
+import { getPosts } from '../lib/posts';
+import { url } from '../lib/url';
+
+const posts = await getPosts();
+const ids = posts.map((p) => url('/post/' + p.id));
+---
+
+<Shell>
+  <TopBar />
+
+  <main class="home-main">
+    <h1 class="home-logo"><Wordmark /></h1>
+
+    <div class="home-form">
+      <SearchBox autofocus />
+      <div class="home-buttons">
+        <button class="gbtn" type="button" data-search>검색</button>
+        <button class="gbtn" type="button" data-lucky>운 좋은 예감</button>
+      </div>
+    </div>
+
+    <p class="home-note">
+      기록 {posts.length}편이 있습니다. <a href={url("/search")}>전체 보기</a>
+    </p>
+  </main>
+
+  <Footer />
+
+  <script is:inline define:vars={{ ids }}>
+    const form = document.querySelector('.searchbox');
+    const input = form?.querySelector('input[name="q"]');
+
+    document.querySelector('[data-search]')?.addEventListener('click', () => form?.requestSubmit());
+
+    document.querySelector('[data-lucky]')?.addEventListener('click', () => {
+      if (!ids.length) return;
+      const pick = ids[Math.floor(Math.random() * ids.length)];
+      location.href = pick;
+    });
+
+    input?.focus();
+  </script>
+</Shell>

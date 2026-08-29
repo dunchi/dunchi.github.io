@@ -1,0 +1,21 @@
+---
+import { SITE } from '../consts';
+import { url } from '../lib/url';
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="region">
+    구글 검색 화면에서 영감을 받아 만든 개인 블로그입니다. Google LLC와 아무 관련이 없습니다.
+  </div>
+  <div class="row">
+    <ul>
+      <li><a href={url('/archive')}>아카이브</a></li>
+      <li><a href={url('/tags')}>태그</a></li>
+      <li><a href={url('/rss.xml')}>RSS</a></li>
+    </ul>
+    <ul>
+      <li><a href={SITE.github}>GitHub</a></li>
+      <li><span style="display:block;padding:15px 12px">© {year} {SITE.author}</span></li>
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,11 @@
+---
+import Icons from './Icons.astro';
+import { SITE } from '../consts';
+import { url } from '../lib/url';
+---
+<header class="topbar">
+  <a class="tlink" href={url('/archive')}>아카이브</a>
+  <a class="tlink" href={url('/tags')}>태그</a>
+  <span class="apps" title="앱 (장식)"><Icons name="apps" size={20} /></span>
+  <a class="signin" href={SITE.github}>GitHub</a>
+</header>
