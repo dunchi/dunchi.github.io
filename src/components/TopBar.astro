@@ -4,8 +4,14 @@ import { SITE } from '../consts';
 import { url } from '../lib/url';
 ---
 <header class="topbar">
-  <a class="tlink" href={url('/archive')}>아카이브</a>
-  <a class="tlink" href={url('/tags')}>태그</a>
-  <span class="apps" title="앱 (장식)"><Icons name="apps" size={20} /></span>
-  <a class="signin" href={SITE.github}>GitHub</a>
+  <nav class="topbar__left">
+    <a href={url('/about')}>{SITE.title} 정보</a>
+    <a href={url('/archive')}>스토어</a>
+  </nav>
+  <nav class="topbar__right">
+    <a href={url('/tags')}>메일</a>
+    <a href={url('/archive')}>이미지</a>
+    <button class="iconbtn" type="button" aria-label="앱" title="앱 (장식)"><Icons name="apps" size={24} /></button>
+    <a class="signin" href={SITE.github}>로그인</a>
+  </nav>
 </header>

@@ -4,8 +4,8 @@ import { url } from '../lib/url';
 interface Props { value?: string; autofocus?: boolean; }
 const { value = '', autofocus = false } = Astro.props;
 ---
-<form class="searchbox" action={url("/search")} method="get" role="search">
-  <Icons name="search" size={20} />
+<form class="searchbox" action={url('/search')} method="get" role="search">
+  <button class="sb-icon sb-plus" type="button" aria-label="추가" title="장식"><Icons name="plus" size={22} /></button>
   <input
     type="text"
     name="q"
@@ -15,8 +15,10 @@ const { value = '', autofocus = false } = Astro.props;
     aria-label="검색"
     autofocus={autofocus}
   />
-  <span class="tools">
-    <button type="button" title="음성 검색 (장식)" aria-label="음성 검색"><Icons name="mic" size={24} /></button>
-    <button type="button" title="이미지 검색 (장식)" aria-label="이미지 검색"><Icons name="lens" size={24} /></button>
-  </span>
+  <div class="sb-tools">
+    <button class="sb-icon" type="button" aria-label="키보드" title="장식"><Icons name="keyboard" size={22} /></button>
+    <button class="sb-icon" type="button" aria-label="음성 검색" title="장식"><Icons name="mic" size={22} /></button>
+    <button class="sb-icon" type="button" aria-label="이미지 검색" title="장식"><Icons name="lens" size={22} /></button>
+    <button class="ai-pill" type="button" title="장식"><Icons name="ai" size={18} /><span>AI 모드</span></button>
+  </div>
 </form>

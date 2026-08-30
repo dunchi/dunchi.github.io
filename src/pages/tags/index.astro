@@ -1,0 +1,22 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import SerpHeader from '../../components/SerpHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { getPosts, tagCounts } from '../../lib/posts';
+import { url } from '../../lib/url';
+
+const posts = await getPosts();
+const tags = tagCounts(posts);
+---
+<Shell title="태그">
+  <SerpHeader tab="태그" tabs={[{ label: '태그', href: url('/tags') }]} />
+  <main class="serp">
+    <div class="serp-stats">관련 검색어 {tags.length}개</div>
+    <div class="result__tags" style="max-width:652px">
+      {tags.map(({ tag, count }) => (
+        <a href={url('/tags/' + encodeURIComponent(tag))}>{tag} · {count}</a>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Shell>

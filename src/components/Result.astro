@@ -1,0 +1,29 @@
+---
+import { formatDate, type Post } from '../lib/posts';
+import { SITE } from '../consts';
+import { url } from '../lib/url';
+
+interface Props { post: Post; }
+const { post } = Astro.props;
+const { title, date, description, tags } = post.data;
+const href = url('/post/' + post.id);
+const shortId = post.id.length > 26 ? post.id.slice(0, 26) + '...' : post.id;
+---
+<li class="result">
+  <div class="result__url">
+    <span class="result__fav" aria-hidden="true">{SITE.title[0]}</span>
+    <div>
+      <div class="result__site">{SITE.title}</div>
+      <div class="result__path">dunchi.github.io › post › {shortId}</div>
+    </div>
+  </div>
+  <h3 class="result__title"><a href={href}>{title}</a></h3>
+  <p class="result__snippet">
+    <span class="d">{formatDate(date)}</span> — {description ?? ''}
+  </p>
+  {tags.length > 0 && (
+    <div class="result__tags">
+      {tags.map((t) => <a href={url('/tags/' + encodeURIComponent(t))}>{t}</a>)}
+    </div>
+  )}
+</li>

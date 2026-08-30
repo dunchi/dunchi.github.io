@@ -6,6 +6,7 @@ import SearchBox from '../components/SearchBox.astro';
 import Wordmark from '../components/Wordmark.astro';
 import { getPosts } from '../lib/posts';
 import { url } from '../lib/url';
+import { SITE } from '../consts';
 
 const posts = await getPosts();
 const ids = posts.map((p) => url('/post/' + p.id));
@@ -20,14 +21,11 @@ const ids = posts.map((p) => url('/post/' + p.id));
     <div class="home-form">
       <SearchBox autofocus />
       <div class="home-buttons">
-        <button class="gbtn" type="button" data-search>검색</button>
-        <button class="gbtn" type="button" data-lucky>운 좋은 예감</button>
+        <button class="gbtn" type="button" data-search>{SITE.title} 검색</button>
+        <button class="gbtn" type="button" data-lucky>I'm Feeling Lucky</button>
       </div>
     </div>
 
-    <p class="home-note">
-      기록 {posts.length}편이 있습니다. <a href={url("/search")}>전체 보기</a>
-    </p>
   </main>
 
   <Footer />

@@ -1,0 +1,28 @@
+---
+import { SITE } from '../consts';
+interface Props { current: number; last: number; hrefFor: (page: number) => string; }
+const { current, last, hrefFor } = Astro.props;
+/** dunchi 의 'u' 를 페이지 수만큼 늘린다. Goooooogle 과 같은 장치. */
+const head = SITE.title.slice(0, 1);
+const tail = SITE.title.slice(2);
+const pages = Array.from({ length: last }, (_, i) => i + 1);
+---
+{last > 1 && (
+  <nav class="gpager" aria-label="페이지 이동">
+    <div class="gpager__word" aria-hidden="true">
+      <span class="fix">{head}</span>
+      {pages.map((p) =>
+        p === current ? <span class="cur">u</span> : <a href={hrefFor(p)}>u</a>
+      )}
+      <span class="fix g">{tail[0]}</span>
+      <span class="fix">{tail[1]}</span>
+      <span class="fix r">{tail.slice(2)}</span>
+    </div>
+    <div class="gpager__nums">
+      {pages.map((p) =>
+        p === current ? <span aria-current="page">{p}</span> : <a href={hrefFor(p)}>{p}</a>
+      )}
+    </div>
+    {current < last && <a class="gpager__next" href={hrefFor(current + 1)}>다음 &gt;</a>}
+  </nav>
+)}

@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import Shell from '../../../layouts/Shell.astro';
+import SerpHeader from '../../../components/SerpHeader.astro';
+import Result from '../../../components/Result.astro';
+import GPager from '../../../components/GPager.astro';
+import Footer from '../../../components/Footer.astro';
+import { getPosts, tagCounts, type Post } from '../../../lib/posts';
+import { PAGE_SIZE } from '../../../consts';
+import { url } from '../../../lib/url';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getPosts();
+  return tagCounts(posts).flatMap(({ tag }) =>
+    paginate(posts.filter((p) => p.data.tags.includes(tag)), { params: { tag }, pageSize: PAGE_SIZE })
+  );
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: Page<Post> };
+const { tag } = Astro.params;
+const all = await getPosts();
+const tabs = tagCounts(all).slice(0, 5).map((t) => ({ label: t.tag, href: url('/tags/' + encodeURIComponent(t.tag)) }));
+const took = (0.14 + Math.random() * 0.2).toFixed(2);
+const hrefFor = (p: number) =>
+  p === 1 ? url('/tags/' + encodeURIComponent(tag!)) : url('/tags/' + encodeURIComponent(tag!) + '/' + p);
+---
+<Shell title={tag}>
+  <SerpHeader q={tag} tab={tag} tabs={tabs} />
+  <main class="serp">
+    <div class="serp-stats">검색결과 약 {page.total}개 ({took}초)</div>
+    <ol class="results">{page.data.map((post) => <Result post={post} />)}</ol>
+    <GPager current={page.currentPage} last={page.lastPage} hrefFor={hrefFor} />
+  </main>
+  <Footer />
+</Shell>

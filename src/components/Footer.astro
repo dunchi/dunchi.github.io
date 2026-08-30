@@ -1,21 +1,80 @@
 ---
-import { SITE } from '../consts';
 import { url } from '../lib/url';
-const year = new Date().getFullYear();
+import { SITE } from '../consts';
 ---
 <footer class="foot">
-  <div class="region">
-    구글 검색 화면에서 영감을 받아 만든 개인 블로그입니다. Google LLC와 아무 관련이 없습니다.
-  </div>
-  <div class="row">
+  <div class="foot__region">대한민국</div>
+  <div class="foot__row">
     <ul>
-      <li><a href={url('/archive')}>아카이브</a></li>
-      <li><a href={url('/tags')}>태그</a></li>
-      <li><a href={url('/rss.xml')}>RSS</a></li>
+      <li><a href={url('/archive')}>광고</a></li>
+      <li><a href={url('/tags')}>비즈니스</a></li>
+      <li><a href={url('/about')}>검색의 원리</a></li>
     </ul>
     <ul>
-      <li><a href={SITE.github}>GitHub</a></li>
-      <li><span style="display:block;padding:15px 12px">© {year} {SITE.author}</span></li>
+      <li><a href={SITE.github}>개인정보처리방침</a></li>
+      <li><a href={url('/about')}>약관</a></li>
+      <li class="setmenu">
+        <button
+          class="setmenu__btn"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-setmenu-btn
+        >설정</button>
+        <div class="setmenu__pop" role="menu" hidden data-setmenu-pop>
+          <a role="menuitem" href={url('/search')}>검색 설정</a>
+          <a role="menuitem" href={url('/search')}>고급검색</a>
+          <a role="menuitem" href={url('/archive')}>나의 활동</a>
+          <a role="menuitem" href={url('/archive')}>검색 기록</a>
+          <a role="menuitem" href={url('/tags')}>검색 관련 데이터</a>
+          <div class="setmenu__sep" role="separator"></div>
+          <button role="menuitem" type="button" data-theme-toggle>다크 테마: 사용 중지</button>
+          <a role="menuitem" href={url('/about')}>도움말</a>
+          <a role="menuitem" href={SITE.github}>관련 정보 보내기</a>
+        </div>
+      </li>
     </ul>
   </div>
 </footer>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-setmenu-btn]');
+  const pop = document.querySelector<HTMLElement>('[data-setmenu-pop]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const root = document.documentElement;
+
+  const isDark = () =>
+    root.dataset.theme === 'dark' ||
+    (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+
+  const label = () => {
+    if (toggle) toggle.textContent = '다크 테마: ' + (isDark() ? '사용' : '사용 중지');
+  };
+
+  const open = (on: boolean) => {
+    if (!pop || !btn) return;
+    pop.hidden = !on;
+    btn.setAttribute('aria-expanded', String(on));
+  };
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    open(pop?.hidden ?? true);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (pop && !pop.hidden && !pop.contains(e.target as Node)) open(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') open(false);
+  });
+
+  toggle?.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    label();
+  });
+
+  label();
+</script>

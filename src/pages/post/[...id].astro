@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Shell from '../../layouts/Shell.astro';
+import SerpHeader from '../../components/SerpHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { getPosts, formatDate, type Post } from '../../lib/posts';
+import { SITE } from '../../consts';
+import { url } from '../../lib/url';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { id: post.id },
+    props: { post, newer: posts[i - 1] ?? null, older: posts[i + 1] ?? null },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post, newer, older } = Astro.props as { post: Post; newer: Post | null; older: Post | null };
+const { Content } = await render(post);
+const { title, date, updated, description, tags } = post.data;
+---
+
+<Shell title={title} description={description}>
+  <SerpHeader q={title} />
+  <main class="doc">
+    <article class="doc__inner">
+      <div class="doc__crumb">dunchi.github.io › post › {post.id}</div>
+      <h1>{title}</h1>
+      <div class="doc__meta">
+        <span>{formatDate(date)}</span>
+        {updated && <span>수정 {formatDate(updated)}</span>}
+        <span>{SITE.author}</span>
+      </div>
+      <div class="doc__body"><Content /></div>
+
+      <nav class="doc__nav">
+        {older ? <a href={url('/post/' + older.id)}>&lt; {older.data.title}</a> : <span></span>}
+        {newer ? <a href={url('/post/' + newer.id)}>{newer.data.title} &gt;</a> : <span></span>}
+      </nav>
+    </article>
+  </main>
+  <Footer />
+</Shell>
