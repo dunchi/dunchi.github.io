@@ -41,6 +41,7 @@
   padding: 0 12px 0 16px;
   font-size: 14px;
   font-weight: 500;
+  color: #041e49;
   cursor: pointer;
 }
 .compose__acts { display: flex; gap: 4px; }
@@ -129,8 +130,8 @@
   justify-content: center;
   flex-shrink: 0;
 }
-.compose__tool:hover { background: rgba(60, 64, 67, 0.12); }
-.compose__tool.is-active { background: #d3e3fd; color: #041e49; }
+.compose__tool:hover { background: rgba(60, 64, 67, 0.12); box-shadow: 0 0 0 4px rgba(60, 64, 67, 0.12); }
+.compose__tool.is-active { background: #d3e3fd; box-shadow: 0 0 0 4px #d3e3fd; color: #041e49; }
 .compose__tool.is-wide { justify-content: space-between; }
 .compose__ttext {
   font-size: 13px;
@@ -184,7 +185,7 @@
 .compose__act {
   width: 20px; height: 20px;
   border: 0;
-  border-radius: 2px;
+  border-radius: 4px;
   background: none;
   color: #444746;
   cursor: pointer;
@@ -192,9 +193,17 @@
   flex-shrink: 0;
   padding: 0;
 }
-.compose__act:hover { background: rgba(60, 64, 67, 0.12); }
-.compose__aa { font-size: 13px; font-weight: 500; line-height: 1; }
-.compose__act.is-on { background: #d3e3fd; color: #041e49; }
+/* 배경을 box-shadow 로 4px 퍼뜨려 28x28 로 보이게 한다. 레이아웃은 20px 그대로. */
+.compose__act:hover {
+  background: rgba(60, 64, 67, 0.12);
+  box-shadow: 0 0 0 4px rgba(60, 64, 67, 0.12);
+}
+.compose__aa { font-size: 14px; font-weight: 500; line-height: 1; }
+.compose__act.is-on {
+  background: #d3e3fd;
+  box-shadow: 0 0 0 4px #d3e3fd;
+  color: #041e49;
+}
 .compose__trash { margin-left: auto; }
 
 @media (max-width: 640px) {
