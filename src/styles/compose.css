@@ -47,6 +47,7 @@
 .compose__acts { display: flex; gap: 4px; }
 .compose__acts button {
   width: 24px; height: 24px;
+  padding: 0;              /* 버튼 기본 패딩(1px 6px)이 아이콘을 밀어낸다 */
   border: 0; background: none; cursor: pointer;
   color: #202124;
   display: grid; place-items: center;

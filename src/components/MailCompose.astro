@@ -134,7 +134,10 @@ const ACTIONS = [
       if (hasContent()) { confirmBox.hidden = false; return; }
       open(false);
     };
-    panel.querySelector('[data-mail-close]')?.addEventListener('click', tryClose);
+    panel.querySelector('[data-mail-close]')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tryClose();
+    });
     confirmBox?.querySelector('[data-mail-keep]')?.addEventListener('click', () => {
       confirmBox.hidden = true;
       text?.focus();
@@ -147,9 +150,12 @@ const ACTIONS = [
     confirmBox?.addEventListener('click', (e) => {
       if (e.target === confirmBox) confirmBox.hidden = true;
     });
-    panel.querySelector('[data-mail-min]')?.addEventListener('click', () => panel.classList.toggle('is-min'));
+    panel.querySelector('[data-mail-min]')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      panel.classList.toggle('is-min');
+    });
     panel.querySelector('.compose__head')?.addEventListener('click', (e) => {
-      if (e.target.closest('button')) return;
+      if (e.target.closest('.compose__acts')) return;
       panel.classList.toggle('is-min');
     });
 
