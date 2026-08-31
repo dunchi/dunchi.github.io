@@ -31,16 +31,23 @@
   padding: 8px 10px;
   min-height: 56px;
 }
-/* 구글 SERP: 헤더 행 16~88, 검색창 26~78, 로고 43, 우측 끝 여백 35px */
+/* 유튜브식 타이트 헤더: 56 = 8 + 40 + 8. 검색창이 정확히 세로 중앙에 앉는다.
+   가로 배치(로고 43, 검색창 179 폭 861, 우측 여백 35)는 구글 SERP 실측값 그대로. */
 .topbar--serp {
-  padding: 26px 35px 0 33px;
-  min-height: 78px;
+  padding: 8px 35px 8px 33px;
+  min-height: 56px;
 }
+.topbar--serp .sb__row { height: 38px; }
+.topbar--serp .sb { border-radius: 20px; }
+.topbar--serp .sb.is-open { border-radius: 20px 20px 0 0; }
+.topbar--serp .sb-icon { width: 32px; height: 32px; }
 .topbar nav { display: flex; align-items: center; }
 .topbar__logo {
   /* 구글 SERP 로고 92x30. 홈 로고(81px=272px폭) 비율 환산 */
   font-size: 27px;
   padding: 5px 10px;
+  /* inline-flex 워드마크의 baseline 여백이 붙어 헤더를 1px 늘린다 */
+  display: flex;
 }
 /* 구글 SERP 검색창 l179 w861. 로고 끝 134 + 로고 padding 10 + 35 = 179 */
 .topbar .sb { flex: 1; max-width: 861px; min-width: 260px; margin: 0 auto 0 35px; }
