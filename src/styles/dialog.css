@@ -151,3 +151,14 @@
 .mdlg__scroll ul { list-style: none; padding: 0; margin: 0 0 12px; }
 .mdlg__scroll li { position: relative; padding-left: 14px; margin-bottom: 6px; }
 .mdlg__scroll li::before { content: '·'; position: absolute; left: 3px; }
+
+/* 요약 한 줄 */
+.info__note {
+  margin: 18px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid #dadce0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #5f6368;
+}
+.info__note b { color: #1f1f1f; font-weight: 600; }
