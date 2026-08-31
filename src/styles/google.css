@@ -622,16 +622,16 @@ button { font-family: var(--sans); }
   border: 0; border-radius: 50%;
   background: none; cursor: pointer;
   display: grid; place-items: center;
+  position: relative;
 }
 .account__btn:hover { background: var(--hover-veil); }
+/* 무지개 링. 구글은 40x40 SVG 조각 4개로 그린다. */
+.account__ring { position: absolute; inset: 0; pointer-events: none; }
 .account__img {
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--g-blue);
-  color: #fff;
-  font-family: var(--wordmark);
-  font-size: 15px; font-weight: 500;
-  display: grid; place-items: center;
+  object-fit: cover;
+  display: block;
 }
 
 .account__card {
@@ -663,11 +663,8 @@ button { font-family: var(--sans); }
 .account__big {
   width: 80px; height: 80px;
   border-radius: 50%;
-  background: var(--g-blue);
-  color: #fff;
-  font-family: var(--wordmark);
-  font-size: 34px; font-weight: 500;
-  display: grid; place-items: center;
+  object-fit: cover;
+  display: block;
 }
 .account__hi { font-size: 16px; margin: 14px 0 16px; }
 .account__pill {
@@ -692,3 +689,6 @@ button { font-family: var(--sans); }
   margin-top: 14px;
 }
 .account__foot a:hover { text-decoration: underline; }
+
+/* display 를 선언한 요소는 [hidden] 이 안 먹는다. 명시적으로 꺼줘야 한다. */
+.account__card[hidden] { display: none; }
