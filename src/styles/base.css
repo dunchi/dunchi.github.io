@@ -143,3 +143,17 @@
 }
 .setmenu__pop a:hover,
 .setmenu__pop button:hover { background: var(--menu-hover); text-decoration: none; }
+
+/* 푸터 안에서 링크처럼 보이는 버튼 (개인정보처리방침) */
+.foot__btn {
+  display: block;
+  padding: 15px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: inherit;
+  cursor: pointer;
+}
+.foot__btn:hover { text-decoration: underline; }

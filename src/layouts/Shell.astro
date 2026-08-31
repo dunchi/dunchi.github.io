@@ -3,6 +3,7 @@ import '../styles/google.css';
 import { SITE } from '../consts';
 import { url } from '../lib/url';
 import MailCompose from '../components/MailCompose.astro';
+import InfoDialog from '../components/InfoDialog.astro';
 
 interface Props { title?: string; description?: string; }
 const { title, description = SITE.description } = Astro.props;
@@ -36,5 +37,6 @@ const pageTitle = title ? `${title} - ${SITE.title} 검색` : SITE.title;
   <body>
     <slot />
     <MailCompose />
+    <InfoDialog />
   </body>
 </html>

@@ -1,0 +1,45 @@
+---
+import { SITE } from '../consts';
+---
+<div class="mdlg" hidden data-info-dlg>
+  <div class="mdlg__card is-info" role="dialog" aria-labelledby="info-t" aria-modal="true">
+    <h2 class="mdlg__title" id="info-t">개인정보처리방침</h2>
+    <div class="mdlg__scroll">
+      <p>
+        개인이 취미로 만든 <b>정적 사이트</b>입니다. 서버가 없어서 방문자 정보를 받아 저장할 곳
+        자체가 없습니다.
+      </p>
+      <ul>
+        <li><b>수집하는 것 — 없습니다.</b> 로그인도, 댓글도, 추적 스크립트도 없습니다.</li>
+        <li><b>브라우저에 남는 것</b> — 밝은/어두운 테마 선택값 하나가 이 브라우저에만 저장됩니다. 어디로도 전송되지 않습니다.</li>
+        <li><b>메일 보내기</b> — 작성한 내용은 방문자 본인의 메일 앱으로 넘어갈 뿐, 이 사이트를 거치지 않습니다.</li>
+        <li><b>호스팅</b> — GitHub Pages를 씁니다. 접속 기록은 GitHub의 정책을 따릅니다.</li>
+      </ul>
+      <p>
+        <b>가져가도 됩니다.</b> 디자인이든 코드든 쓸모 있어 보이는 게 있으면 마음껏 쓰세요.
+        출처를 남겨주면 고맙지만 의무는 아닙니다.
+      </p>
+      <p>
+        구글 검색 화면에서 영감을 받아 만들었을 뿐, Google LLC와 아무 관련이 없습니다.
+        문의는 <b>{SITE.email}</b> 로 주세요.
+      </p>
+    </div>
+    <div class="mdlg__acts">
+      <button type="button" class="mdlg__btn" data-info-close>확인</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-info-dlg]');
+  const show = (on: boolean) => { if (box) box.hidden = !on; };
+
+  document.querySelectorAll('[data-info-open]').forEach((b) =>
+    b.addEventListener('click', (e) => { e.preventDefault(); show(true); })
+  );
+  box?.querySelector('[data-info-close]')?.addEventListener('click', () => show(false));
+  box?.addEventListener('click', (e) => { if (e.target === box) show(false); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && box && !box.hidden) show(false);
+  });
+</script>
