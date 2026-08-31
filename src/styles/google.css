@@ -739,10 +739,19 @@ button { font-family: var(--sans); }
 .account__pill:hover { background: var(--menu-hover); text-decoration: none; }
 .account__sep { width: 100%; height: 1px; background: var(--foot-border); margin: 16px 0 0; }
 .account__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   width: 100%;
-  padding: 13px 28px;
+  padding: 11px 28px;
   font-size: 14px;
   color: var(--menu-text);
+}
+.account__rowico {
+  display: grid; place-items: center;
+  width: 20px; height: 20px;
+  color: var(--icon);
+  flex-shrink: 0;
 }
 .account__row:hover { background: var(--menu-hover); text-decoration: none; }
 .account__foot {

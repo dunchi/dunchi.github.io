@@ -9,3 +9,11 @@ export const SITE = {
 } as const;
 
 export const PAGE_SIZE = 10;
+
+/** 프로필 카드에 뜨는 바깥 링크들 */
+export const LINKS = [
+  { icon: 'github', label: 'GitHub', href: 'https://github.com/dunchi' },
+  { icon: 'tistory', label: '구 블로그', href: 'https://aiwcpd.tistory.com' },
+  { icon: 'resume', label: '구 이력서', href: 'https://dunchi.github.io/docs/README.md.html' },
+  { icon: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/channel/UCXkAt4TGK0L1NF8gr-LuZEQ' },
+] as const;

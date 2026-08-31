@@ -1,6 +1,7 @@
 ---
-import { SITE } from '../consts';
+import { SITE, LINKS } from '../consts';
 import { url } from '../lib/url';
+import Icons from './Icons.astro';
 /* 구글 실측:
    - 래퍼 40x40, padding 4px, radius 50%
    - 안쪽 이미지 32x32 원형
@@ -38,8 +39,16 @@ const photo = url('/profile.jpg');
     <div class="account__hi">안녕하세요, {SITE.author}입니다.</div>
     <a class="account__pill" href={url('/about')}>프로필 보기</a>
     <div class="account__sep"></div>
-    <a class="account__row" href={SITE.github}>GitHub</a>
-    <a class="account__row" href={url('/rss.xml')}>RSS 구독</a>
+    {LINKS.map((l) => (
+      <a class="account__row" href={l.href} target="_blank" rel="noopener">
+        <span class="account__rowico"><Icons name={l.icon} size={20} /></span>
+        <span>{l.label}</span>
+      </a>
+    ))}
+    <a class="account__row" href={url('/rss.xml')}>
+      <span class="account__rowico"><Icons name="ai" size={20} /></span>
+      <span>RSS 구독</span>
+    </a>
     <div class="account__sep"></div>
     <div class="account__foot">
       <a href={url('/about')}>블로그 정보</a>
