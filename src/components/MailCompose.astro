@@ -30,15 +30,9 @@ const TOOLS = [
 ] as const;
 
 const ACTIONS = [
-  { n: 'format', icon: 'aa', l: '서식 지정 옵션', text: 'Aa' },
+  { n: 'format', icon: 'aa', l: '서식 지정 옵션' },
   { n: 'attach', icon: 'attach', l: '파일 첨부' },
   { n: 'link', icon: 'link', l: '링크 삽입' },
-  { n: 'emoji', icon: 'emoji', l: '그림 이모티콘 삽입' },
-  { n: 'drive', icon: 'drive', l: 'Drive에 저장된 파일 삽입' },
-  { n: 'image', icon: 'image', l: '사진 삽입' },
-  { n: 'lock', icon: 'lock', l: '비밀 모드 전환' },
-  { n: 'sign', icon: 'pen', l: '서명 삽입' },
-  { n: 'more', icon: 'morevert', l: '옵션 더보기' },
 ] as const;
 ---
 <div class="compose no-tools" hidden data-mail>
@@ -46,12 +40,15 @@ const ACTIONS = [
     <span class="compose__title">새 메일</span>
     <div class="compose__acts">
       <button type="button" aria-label="최소화" data-mail-min><I name="minimize" size={20} /></button>
-      <button type="button" aria-label="전체 화면으로 보기"><I name="expand" size={18} /></button>
       <button type="button" aria-label="저장 및 닫기" data-mail-close><I name="close" size={20} /></button>
     </div>
   </div>
 
   <div class="compose__body">
+    <label class="compose__field">
+      <span>보내는사람</span>
+      <input type="text" placeholder="회신받을 메일 주소나 연락처" data-mail-from />
+    </label>
     <label class="compose__field">
       <span>받는사람</span>
       <input type="text" value={SITE.email} readonly />
@@ -87,16 +84,12 @@ const ACTIONS = [
   <div class="compose__foot">
     <div class="compose__send">
       <button type="button" class="compose__send-main" data-mail-send>보내기</button>
-      <button type="button" class="compose__send-caret" aria-label="보내기 옵션 더보기"><I name="caret" size={18} /></button>
     </div>
     {ACTIONS.map((a) => (
       <button type="button" class="compose__act" data-act={a.n} aria-label={a.l} title={a.l}>
         {a.n === 'format' ? <span class="compose__aa">Aa</span> : <I name={a.icon} size={20} />}
       </button>
     ))}
-    <button type="button" class="compose__act compose__trash" aria-label="임시보관 메일 삭제" title="임시보관 메일 삭제">
-      <I name="trash" size={20} />
-    </button>
   </div>
 </div>
 
@@ -135,8 +128,10 @@ const ACTIONS = [
     text?.addEventListener('input', sync); sync();
 
     panel.querySelector('[data-mail-send]')?.addEventListener('click', () => {
+      const from = (panel.querySelector('[data-mail-from]')?.value || '').trim();
       const s = encodeURIComponent(subject?.value || '');
-      const b = encodeURIComponent(text?.innerText || '');
+      const body = (from ? `회신받을 곳: ${from}\n\n` : '') + (text?.innerText || '');
+      const b = encodeURIComponent(body);
       location.href = `mailto:${to}?subject=${s}&body=${b}`;
     });
 
