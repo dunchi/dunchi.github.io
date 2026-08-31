@@ -4,7 +4,7 @@ import { url } from '../lib/url';
 
 interface Props { q?: string; tab?: string; tabs?: { label: string; href: string }[]; }
 const { q = '', tab = '전체', tabs = [] } = Astro.props;
-const all = [{ label: '전체', href: url('/search') }, ...tabs];
+const all = [{ label: '전체', href: url('/') }, ...tabs];
 ---
 <header class="serp-head">
   <TopBar search q={q} />

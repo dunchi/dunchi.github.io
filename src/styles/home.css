@@ -93,37 +93,6 @@
 }
 .sb__all:hover { text-decoration: underline; }
 
-/* ---------- 첫 화면 ---------- */
-.home-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: clamp(90px, 17vh, 258px) 20px 0;
-}
-.home-logo {
-  /* 구글 로고 272x92. Poppins 로 같은 폭이 나오는 크기 */
-  font-size: 81px;
-  margin-bottom: 22px;
-  font-weight: 500;
-}
-.home-form { width: 100%; max-width: 688px; display: flex; flex-direction: column; align-items: center; }
-.home-buttons { display: flex; margin-top: 18px; flex-wrap: wrap; justify-content: center; }
-
-.gbtn {
-  background: var(--btn-bg);
-  border: 1px solid var(--btn-border);
-  border-radius: 8px;
-  color: var(--btn-text);
-  font-size: 14px;
-  font-weight: 500;
-  height: 36px;
-  padding: 0 16px;
-  margin: 11px 4px;
-  cursor: pointer;
-}
-.gbtn:hover { border-color: var(--btn-border-hover); }
-
 /* ---------- 가상 키보드 ----------
    google.com '입력 도구' 실측: 517x214.5, 우측 하단 2px 고정,
    키 29x29 / margin 2px / #f5f5f5 / 테두리 rgba(0,0,0,.1) / radius 2px */
