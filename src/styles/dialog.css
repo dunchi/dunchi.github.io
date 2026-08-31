@@ -57,8 +57,89 @@
 .mdlg__btn.is-danger { color: #b3261e; }
 .mdlg__btn.is-danger:hover { background: rgba(179, 38, 30, 0.08); }
 
-/* 긴 안내문용 변형 */
-.mdlg__card.is-info { max-width: 480px; }
+/* ---------- 안내 모달 (개인정보처리방침) ---------- */
+.mdlg__card.is-info {
+  max-width: 620px;
+  padding: 32px 32px 20px;
+}
+.info__title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  margin: 0;
+  color: #1f1f1f;
+}
+.info__sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #80868b;
+}
+.info__scroll {
+  max-height: 56vh;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding-right: 4px;
+}
+.info__lead {
+  margin: 0 0 22px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #3c4043;
+}
+.info__lead b { color: #1f1f1f; font-weight: 600; }
+
+.info__row {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 14px;
+  padding: 12px 0;
+  align-items: start;
+}
+.info__dot {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+.info__row.is-b .info__dot { background: #4285f4; }
+.info__row.is-r .info__dot { background: #ea4335; }
+.info__row.is-y .info__dot { background: #fbbc05; }
+.info__row.is-g .info__dot { background: #34a853; }
+.info__row.is-b .info__h { color: #1a73e8; }
+.info__row.is-r .info__h { color: #d93025; }
+.info__row.is-y .info__h { color: #b06000; }
+.info__row.is-g .info__h { color: #188038; }
+
+.info__h {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 22px;
+  margin-bottom: 3px;
+}
+.info__p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #5f6368;
+}
+.info__p b { color: #1f1f1f; font-weight: 600; }
+
+.info__take {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: linear-gradient(105deg, rgba(66,133,244,.10), rgba(52,168,83,.10));
+}
+.info__take .info__h { color: #1a73e8; font-size: 16px; }
+
+.info__foot {
+  margin: 20px 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #80868b;
+}
+.info__foot b { color: #5f6368; font-weight: 500; }
+
+
 .mdlg__scroll {
   max-height: 52vh;
   overflow-y: auto;

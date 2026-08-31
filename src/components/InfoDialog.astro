@@ -1,31 +1,65 @@
 ---
 import { SITE } from '../consts';
+const ITEMS = [
+  {
+    c: 'b',
+    h: '수집하는 것 — 없음',
+    p: '로그인도 댓글도 추적 스크립트도 없습니다. 안 하는 게 아니라 <b>못 합니다.</b> 받아줄 서버가 없거든요.',
+  },
+  {
+    c: 'r',
+    h: '브라우저에 남는 것 — 딱 하나',
+    p: '밝은 테마냐 어두운 테마냐. 그거 하나입니다. 이 브라우저 밖으로 <b>한 발짝도</b> 안 나갑니다.',
+  },
+  {
+    c: 'y',
+    h: '메일 보내기',
+    p: '작성한 내용은 이 사이트를 거치지 않고 <b>당신 메일 앱으로 바로</b> 갑니다. 중간에서 훔쳐볼 구간이 아예 없습니다.',
+  },
+  {
+    c: 'g',
+    h: '호스팅 — GitHub Pages',
+    p: '접속 기록은 GitHub 몫입니다. 그건 제 관할 밖이라 저도 못 봅니다.',
+  },
+];
 ---
 <div class="mdlg" hidden data-info-dlg>
   <div class="mdlg__card is-info" role="dialog" aria-labelledby="info-t" aria-modal="true">
-    <h2 class="mdlg__title" id="info-t">개인정보처리방침</h2>
-    <div class="mdlg__scroll">
-      <p>
-        개인이 취미로 만든 <b>정적 사이트</b>입니다. 서버가 없어서 방문자 정보를 받아 저장할 곳
-        자체가 없습니다.
+    <h2 class="info__title" id="info-t">개인정보처리방침</h2>
+    <p class="info__sub">읽는 데 30초 · 지킬 게 없어서 위반할 일도 없음</p>
+
+    <div class="info__scroll">
+      <p class="info__lead">
+        개인이 취미로 만든 <b>정적 사이트</b>입니다. 서버가 없습니다.
+        그래서 방문자 정보를 모으고 싶어도 <b>모을 데가 없습니다.</b>
       </p>
-      <ul>
-        <li><b>수집하는 것 — 없습니다.</b> 로그인도, 댓글도, 추적 스크립트도 없습니다.</li>
-        <li><b>브라우저에 남는 것</b> — 밝은/어두운 테마 선택값 하나가 이 브라우저에만 저장됩니다. 어디로도 전송되지 않습니다.</li>
-        <li><b>메일 보내기</b> — 작성한 내용은 방문자 본인의 메일 앱으로 넘어갈 뿐, 이 사이트를 거치지 않습니다.</li>
-        <li><b>호스팅</b> — GitHub Pages를 씁니다. 접속 기록은 GitHub의 정책을 따릅니다.</li>
-      </ul>
-      <p>
-        <b>가져가도 됩니다.</b> 디자인이든 코드든 쓸모 있어 보이는 게 있으면 마음껏 쓰세요.
-        출처를 남겨주면 고맙지만 의무는 아닙니다.
-      </p>
-      <p>
-        구글 검색 화면에서 영감을 받아 만들었을 뿐, Google LLC와 아무 관련이 없습니다.
-        문의는 <b>{SITE.email}</b> 로 주세요.
+
+      {ITEMS.map((i) => (
+        <div class={`info__row is-${i.c}`}>
+          <span class="info__dot"></span>
+          <div>
+            <div class="info__h">{i.h}</div>
+            <p class="info__p" set:html={i.p}></p>
+          </div>
+        </div>
+      ))}
+
+      <div class="info__take">
+        <div class="info__h">가져가도 됩니다</div>
+        <p class="info__p">
+          디자인이든 코드든 쓸모 있어 보이면 마음껏 쓰세요.
+          출처를 남겨주시면 제가 기분이 좋습니다. 의무는 아닙니다.
+        </p>
+      </div>
+
+      <p class="info__foot">
+        구글 검색 화면에서 영감을 받았을 뿐, Google LLC와는 아무 사이도 아닙니다.
+        저쪽은 저를 모릅니다. 문의는 <b>{SITE.email}</b>
       </p>
     </div>
+
     <div class="mdlg__acts">
-      <button type="button" class="mdlg__btn" data-info-close>확인</button>
+      <button type="button" class="mdlg__btn" data-info-close>알겠습니다</button>
     </div>
   </div>
 </div>
