@@ -3,12 +3,17 @@ import Icons from './Icons.astro';
 import AccountButton from './AccountButton.astro';
 import Wordmark from './Wordmark.astro';
 import { SITE } from '../consts';
+import SearchBox from './SearchBox.astro';
 import { url } from '../lib/url';
+
+interface Props { q?: string; search?: boolean; }
+const { q = '', search = false } = Astro.props;
 ---
 <header class="topbar">
   <nav class="topbar__left">
     <a class="topbar__logo" href={url('/')} aria-label={`${SITE.title} 홈페이지로 이동`}><Wordmark /></a>
   </nav>
+  {search && <SearchBox value={q} />}
   <nav class="topbar__right">
     <button class="iconbtn" type="button" aria-label="공유" title="공유">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

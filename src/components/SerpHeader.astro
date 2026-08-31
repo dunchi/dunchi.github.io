@@ -1,9 +1,5 @@
 ---
-import Icons from './Icons.astro';
-import AccountButton from './AccountButton.astro';
-import SearchBox from './SearchBox.astro';
-import Wordmark from './Wordmark.astro';
-import { SITE } from '../consts';
+import TopBar from './TopBar.astro';
 import { url } from '../lib/url';
 
 interface Props { q?: string; tab?: string; tabs?: { label: string; href: string }[]; }
@@ -11,14 +7,7 @@ const { q = '', tab = '전체', tabs = [] } = Astro.props;
 const all = [{ label: '전체', href: url('/search') }, ...tabs];
 ---
 <header class="serp-head">
-  <div class="serp-head__in">
-    <a class="serp-logo" href={url('/')} aria-label={SITE.title}><Wordmark /></a>
-    <SearchBox value={q} />
-    <div class="serp-actions">
-      <button class="iconbtn" type="button" aria-label="앱" title="장식"><Icons name="apps" size={24} /></button>
-      <AccountButton />
-    </div>
-  </div>
+  <TopBar search q={q} />
   <nav class="serp-tabs">
     {all.map((t) => (
       <a href={t.href} aria-current={t.label === tab ? 'page' : undefined}>{t.label}</a>
