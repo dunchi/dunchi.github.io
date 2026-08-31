@@ -114,8 +114,6 @@ const ACTIONS = [
 
     const open = (on) => {
       panel.hidden = !on;
-      const cb = document.querySelector('[data-mail-confirm]');
-      if (cb) cb.hidden = true;              // 남아 있는 다이얼로그가 화면을 덮지 않게
       if (on) { panel.classList.remove('is-min'); subject?.focus(); }
     };
 
@@ -143,10 +141,7 @@ const ACTIONS = [
       if (hasContent()) { confirmBox.hidden = false; return; }
       open(false);
     };
-    panel.querySelector('[data-mail-close]')?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tryClose();
-    });
+    panel.querySelector('[data-mail-close]')?.addEventListener('click', tryClose);
     confirmBox?.querySelector('[data-mail-keep]')?.addEventListener('click', () => {
       confirmBox.hidden = true;
       text?.focus();
@@ -159,12 +154,9 @@ const ACTIONS = [
     confirmBox?.addEventListener('click', (e) => {
       if (e.target === confirmBox) confirmBox.hidden = true;
     });
-    panel.querySelector('[data-mail-min]')?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      panel.classList.toggle('is-min');
-    });
+    panel.querySelector('[data-mail-min]')?.addEventListener('click', () => panel.classList.toggle('is-min'));
     panel.querySelector('.compose__head')?.addEventListener('click', (e) => {
-      if (e.target.closest('.compose__acts')) return;
+      if (e.target.closest('button')) return;
       panel.classList.toggle('is-min');
     });
 
