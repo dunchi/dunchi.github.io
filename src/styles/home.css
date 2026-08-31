@@ -41,6 +41,7 @@
   font-family: var(--sans);
   font-size: 16px;
   line-height: 22px;
+  padding-left: 35px;
 }
 .sb-icon {
   width: 40px; height: 40px;
@@ -51,25 +52,8 @@
   flex-shrink: 0;
 }
 .sb-icon:hover { background: var(--hover-veil); }
-.sb-plus { margin-left: 3px; }
 .sb-tools { display: flex; align-items: center; flex-shrink: 0; }
 
-.ai-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 12px 0 8px;
-  margin-left: 6px;
-  border: 0;
-  border-radius: 100px;
-  background: var(--pill-bg);
-  color: var(--text);
-  font-size: 14px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.ai-pill:hover { filter: brightness(1.08); }
 
 /* ---------- 자동완성 패널 ---------- */
 .sb__panel {
@@ -139,3 +123,52 @@
   cursor: pointer;
 }
 .gbtn:hover { border-color: var(--btn-border-hover); }
+
+/* ---------- 가상 키보드 ----------
+   google.com '입력 도구' 실측: 517x214.5, 우측 하단 2px 고정,
+   키 29x29 / margin 2px / #f5f5f5 / 테두리 rgba(0,0,0,.1) / radius 2px */
+.vk {
+  --s: 1.3;            /* 배율. 실측 1배 = 517x214.5 */
+  position: fixed;
+  right: 2px;
+  bottom: 2px;
+  z-index: 2147483644;
+  width: calc(517px * var(--s));
+  box-sizing: border-box;
+  padding: calc(10px * var(--s));
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+  font: calc(14px * var(--s)) arial, sans-serif;
+  user-select: none;
+}
+.vk[hidden] { display: none; }
+.vk__t {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 27.5px;      /* 실측값 고정. 배율은 키에만 */
+  font-size: 16px;
+  color: #888;
+}
+.vk__x {
+  border: 0; background: none; cursor: pointer;
+  color: #888; font-size: calc(14px * var(--s)); line-height: 1; padding: 0 4px;
+}
+.vk__row { white-space: nowrap; }
+.vk__k {
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(29px * var(--s)); height: calc(29px * var(--s));
+  margin: calc(2px * var(--s)); padding: 1px;
+  background: #f5f5f5;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  color: #444;
+  font: calc(14px * var(--s)) Arial, sans-serif;
+  cursor: pointer;
+  vertical-align: top;
+}
+.vk__k:hover { background: #eee; }
+.vk__k.is-on { background: #ddd; }
+.vk__k--blank { visibility: hidden; }
