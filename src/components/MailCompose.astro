@@ -1,0 +1,68 @@
+---
+import { SITE } from '../consts';
+/* Gmail 작성창 실측:
+   600x616 / 우측 71px / 하단 0 / radius 8px 8px 0 0
+   헤더 40px bg #f2f6fc fs 16px
+   본문 fs 13px / 받는사람·제목 fs 14px
+   그림자 rgba(0,0,0,.14) 0 8px 10px 1px, rgba(0,0,0,.12) 0 3px 14px */
+---
+<div class="compose" hidden data-mail>
+  <div class="compose__head">
+    <span class="compose__title" data-mail-title>새 메일 작성</span>
+    <div class="compose__acts">
+      <button type="button" aria-label="최소화" data-mail-min>&#9472;</button>
+      <button type="button" aria-label="닫기" data-mail-close>&#10005;</button>
+    </div>
+  </div>
+
+  <div class="compose__body">
+    <label class="compose__field">
+      <span>받는사람</span>
+      <input type="text" value={SITE.email} readonly />
+    </label>
+    <label class="compose__field">
+      <input type="text" placeholder="제목" data-mail-subject />
+    </label>
+    <textarea class="compose__text" placeholder="메일 본문" data-mail-text></textarea>
+  </div>
+
+  <div class="compose__foot">
+    <button class="compose__send" type="button" data-mail-send>보내기</button>
+    <span class="compose__note">메일 앱이 열립니다</span>
+  </div>
+</div>
+
+<script is:inline define:vars={{ to: SITE.email }}>
+  (function () {
+    const panel = document.querySelector('[data-mail]');
+    if (!panel) return;
+    const subject = panel.querySelector('[data-mail-subject]');
+    const text = panel.querySelector('[data-mail-text]');
+
+    const open = (on) => {
+      panel.hidden = !on;
+      if (on) { panel.classList.remove('is-min'); subject?.focus(); }
+    };
+
+    document.querySelectorAll('[data-mail-open]').forEach((b) =>
+      b.addEventListener('click', (e) => { e.preventDefault(); open(true); })
+    );
+    panel.querySelector('[data-mail-close]')?.addEventListener('click', () => open(false));
+    panel.querySelector('[data-mail-min]')?.addEventListener('click', () => panel.classList.toggle('is-min'));
+    panel.querySelector('.compose__head')?.addEventListener('click', (e) => {
+      if (e.target.closest('button')) return;
+      panel.classList.toggle('is-min');
+    });
+
+    // 정적 사이트라 서버로 못 보낸다. 방문자의 메일 앱으로 넘긴다.
+    panel.querySelector('[data-mail-send]')?.addEventListener('click', () => {
+      const s = encodeURIComponent(subject?.value || '');
+      const b = encodeURIComponent(text?.value || '');
+      location.href = `mailto:${to}?subject=${s}&body=${b}`;
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) open(false);
+    });
+  })();
+</script>

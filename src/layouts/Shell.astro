@@ -2,6 +2,7 @@
 import '../styles/google.css';
 import { SITE } from '../consts';
 import { url } from '../lib/url';
+import MailCompose from '../components/MailCompose.astro';
 
 interface Props { title?: string; description?: string; }
 const { title, description = SITE.description } = Astro.props;
@@ -34,5 +35,6 @@ const pageTitle = title ? `${title} - ${SITE.title} 검색` : SITE.title;
   </head>
   <body>
     <slot />
+    <MailCompose />
   </body>
 </html>

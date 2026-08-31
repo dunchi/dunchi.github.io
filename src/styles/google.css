@@ -46,6 +46,11 @@
   --menu-text: #1f1f1f;
   --menu-hover: #f1f3f4;
   --menu-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.2);
+  --cp-bg: #ffffff;
+  --cp-head: #f2f6fc;
+  --cp-text: #202124;
+  --cp-muted: #5f6368;
+  --cp-line: #e0e0e0;
 
   --sans: arial, 'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
   --wordmark: 'Poppins', arial, sans-serif;
@@ -88,6 +93,16 @@
     --menu-text: #ffffff;
     --menu-hover: #363840;
     --menu-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.5);
+  --cp-bg: #2d2e30;
+  --cp-head: #37393b;
+  --cp-text: #e8eaed;
+  --cp-muted: #9aa0a6;
+  --cp-line: #444746;
+    --cp-bg: #2d2e30;
+    --cp-head: #37393b;
+    --cp-text: #e8eaed;
+    --cp-muted: #9aa0a6;
+    --cp-line: #444746;
   }
 }
 
@@ -122,6 +137,11 @@
   --menu-text: #ffffff;
   --menu-hover: #363840;
   --menu-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.5);
+  --cp-bg: #2d2e30;
+  --cp-head: #37393b;
+  --cp-text: #e8eaed;
+  --cp-muted: #9aa0a6;
+  --cp-line: #444746;
 }
 
 * { box-sizing: border-box; }
@@ -798,3 +818,114 @@ button { font-family: var(--sans); }
   color: #fff; font-size: 16px; cursor: pointer;
 }
 .lightbox__close:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* ---------- 메일 작성창 (Gmail 실측) ----------
+   600x616 / 우측 71px / 하단 0 / radius 8px 8px 0 0
+   헤더 40px, bg #f2f6fc, fs 16px */
+.compose {
+  position: fixed;
+  right: 71px;
+  bottom: 0;
+  width: 600px;
+  max-width: calc(100vw - 24px);
+  height: 616px;
+  max-height: calc(100vh - 40px);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background: var(--cp-bg);
+  border-radius: 8px 8px 0 0;
+  box-shadow: rgba(0, 0, 0, 0.14) 0 8px 10px 1px, rgba(0, 0, 0, 0.12) 0 3px 14px;
+  overflow: hidden;
+}
+.compose[hidden] { display: none; }
+.compose.is-min { height: 40px; }
+.compose.is-min .compose__body,
+.compose.is-min .compose__foot { display: none; }
+
+.compose__head {
+  flex-shrink: 0;
+  height: 40px;
+  background: var(--cp-head);
+  color: var(--cp-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.compose__acts { display: flex; gap: 2px; }
+.compose__acts button {
+  width: 32px; height: 32px;
+  border: 0; border-radius: 50%;
+  background: none; cursor: pointer;
+  color: var(--cp-text);
+  font-size: 12px;
+  display: grid; place-items: center;
+}
+.compose__acts button:hover { background: rgba(60, 64, 67, 0.12); }
+
+.compose__body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.compose__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--cp-line);
+  font-size: 14px;
+  color: var(--cp-muted);
+}
+.compose__field span { flex-shrink: 0; }
+.compose__field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cp-text);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 6px 0;
+}
+.compose__field input[readonly] { color: var(--cp-muted); }
+
+.compose__text {
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: transparent;
+  color: var(--cp-text);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 12px 16px;
+}
+
+.compose__foot {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 14px;
+}
+.compose__send {
+  height: 36px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 18px;
+  background: #0b57d0;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.compose__send:hover { background: #0a4fbd; }
+.compose__note { font-size: 12px; color: var(--cp-muted); }
+
+@media (max-width: 700px) {
+  .compose { right: 0; left: 0; width: auto; max-width: none; }
+}

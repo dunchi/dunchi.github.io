@@ -10,7 +10,7 @@ import { url } from '../lib/url';
     <a href={url('/archive')}>스토어</a>
   </nav>
   <nav class="topbar__right">
-    <a href={url('/tags')}>메일</a>
+    <a href={`mailto:${SITE.email}`} data-mail-open>메일</a>
     <a href={url('/archive')}>이미지</a>
     <button class="iconbtn" type="button" aria-label="앱" title="앱 (장식)"><Icons name="apps" size={24} /></button>
     <AccountButton />
