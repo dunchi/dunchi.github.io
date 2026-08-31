@@ -1,5 +1,6 @@
 /* =========================================================
-   google.com 재현 — 치수는 실제 구글 값을 계측해서 맞춘 것
+   google.com 재현
+   모든 수치는 CDP로 실제 google.com 에서 계측한 값이다.
    ========================================================= */
 
 :root {
@@ -13,18 +14,26 @@
   --text-2: #3c4043;
   --muted: #70757a;
   --icon: #5f6368;
+  --toplink: #202124;
+
+  /* 로고: 라이트는 4색, 다크는 흰색 (구글과 동일) */
+  --logo-mono: none;
 
   --box-bg: #ffffff;
   --box-border: #dfe1e5;
-  --box-shadow: 0 1px 6px rgba(32, 33, 36, 0.18);
+  --box-shadow: none;
   --box-shadow-hover: 0 1px 6px rgba(32, 33, 36, 0.28);
 
   --btn-bg: #f8f9fa;
   --btn-border: #f8f9fa;
   --btn-border-hover: #dadce0;
   --btn-text: #3c4043;
+
+  --signin-bg: #0b57d0;
+  --signin-text: #ffffff;
+
+  --pill-bg: #f0f4f9;
   --hover-veil: rgba(60, 64, 67, 0.08);
-  --pill-bg: #f1f3f4;
 
   --foot-bg: #f2f2f2;
   --foot-border: #dadce0;
@@ -41,65 +50,70 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #1f1f1f;
-    --text: #e8eaed;
+    --bg: #22242a;
+    --text: #e8e8e8;
     --text-2: #dadce0;
     --muted: #9aa0a6;
     --icon: #c4c7c5;
+    --toplink: #e3e3e3;
+    --logo-mono: #ffffff;
 
-    --box-bg: #303134;
+    --box-bg: #363840;
     --box-border: transparent;
     --box-shadow: none;
     --box-shadow-hover: none;
 
-    --btn-bg: #303134;
+    --btn-bg: #4d5156;
     --btn-border: #303134;
     --btn-border-hover: #5f6368;
     --btn-text: #e8eaed;
-    --hover-veil: rgba(232, 234, 237, 0.08);
-    --pill-bg: #444746;
 
-    --foot-bg: #171717;
-    --foot-border: #3c4043;
-    --foot-text: #999da2;
+    --signin-bg: #c2e7ff;
+    --signin-text: #001d35;
 
-    --menu-bg: #303134;
+    --pill-bg: #3c4043;
+    --hover-veil: rgba(232, 234, 237, 0.1);
+
+    --foot-bg: #16171a;
+    --foot-border: #444746;
+    --foot-text: #e8e8e8;
+
+    --menu-bg: #363840;
     --menu-text: #e8eaed;
-    --menu-hover: #3c4043;
+    --menu-hover: #4d5156;
     --menu-shadow: 0 -1px 6px rgba(0, 0, 0, 0.6);
   }
 }
 
-/* 설정 메뉴에서 다크 테마를 직접 켰을 때 */
+/* 설정 메뉴에서 다크를 직접 켰을 때 */
 :root[data-theme='dark'] {
-  --bg: #1f1f1f;
-  --text: #e8eaed;
+  --bg: #22242a;
+  --text: #e8e8e8;
   --text-2: #dadce0;
   --muted: #9aa0a6;
   --icon: #c4c7c5;
-
-  --box-bg: #303134;
+  --toplink: #e3e3e3;
+  --logo-mono: #ffffff;
+  --box-bg: #363840;
   --box-border: transparent;
   --box-shadow: none;
   --box-shadow-hover: none;
-
-  --btn-bg: #303134;
+  --btn-bg: #4d5156;
   --btn-border: #303134;
   --btn-border-hover: #5f6368;
   --btn-text: #e8eaed;
-  --hover-veil: rgba(232, 234, 237, 0.08);
-  --pill-bg: #444746;
-
-  --foot-bg: #171717;
-  --foot-border: #3c4043;
-  --foot-text: #999da2;
-
-  --menu-bg: #303134;
+  --signin-bg: #c2e7ff;
+  --signin-text: #001d35;
+  --pill-bg: #3c4043;
+  --hover-veil: rgba(232, 234, 237, 0.1);
+  --foot-bg: #16171a;
+  --foot-border: #444746;
+  --foot-text: #e8e8e8;
+  --menu-bg: #363840;
   --menu-text: #e8eaed;
-  --menu-hover: #3c4043;
+  --menu-hover: #4d5156;
   --menu-shadow: 0 -1px 6px rgba(0, 0, 0, 0.6);
 }
-
 
 * { box-sizing: border-box; }
 body, h1, h2, h3, p, ul, ol, pre { margin: 0; }
@@ -111,8 +125,7 @@ body {
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  line-height: normal;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -137,72 +150,85 @@ button { font-family: var(--sans); }
 .wordmark span:nth-child(6n + 4) { color: var(--g-blue); }
 .wordmark span:nth-child(6n + 5) { color: var(--g-green); }
 .wordmark span:nth-child(6n + 6) { color: var(--g-red); }
+/* 다크에서는 구글도 로고가 흰색 단색이다. 색을 남기려면 이 두 블록만 지우면 된다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .wordmark span { color: #fff; }
+}
+:root[data-theme='dark'] .wordmark span { color: #fff; }
 
 /* ---------- 상단바 ---------- */
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 20px 0;
+  padding: 8px 15px 0;
   min-height: 60px;
-  font-size: 14px;
 }
-.topbar nav { display: flex; align-items: center; gap: 15px; }
-.topbar a { color: var(--text); }
-.topbar nav > a:not(.signin):hover { text-decoration: underline; }
+.topbar nav { display: flex; align-items: center; }
+.topbar__left a {
+  font-size: 14px;
+  color: var(--text);
+  padding: 5px;
+  margin: 0 5px 0 15px;
+}
+.topbar__right { gap: 15px; }
+.topbar__right > a:not(.signin) {
+  font-size: 13px;
+  color: var(--toplink);
+}
+.topbar__left a:hover, .topbar__right > a:not(.signin):hover { text-decoration: underline; }
 
 .iconbtn {
   width: 40px; height: 40px;
   display: grid; place-items: center;
   background: none; border: 0; cursor: pointer;
   border-radius: 50%;
+  padding: 8px;
   color: var(--icon);
 }
 .iconbtn:hover { background: var(--hover-veil); }
 
 .signin {
-  background: #1a73e8;
-  color: #fff !important;
+  background: var(--signin-bg);
+  color: var(--signin-text) !important;
   font-size: 14px;
   font-weight: 500;
-  line-height: 16px;
-  padding: 9px 23px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  letter-spacing: 0.25px;
+  padding: 10px 12px;
+  min-width: 85px;
+  text-align: center;
+  border: 0;
+  border-radius: 100px;
 }
-.signin:hover { background: #2b7de9; box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3); }
+.signin:hover { filter: brightness(0.95); }
 
 /* ---------- 검색창 ---------- */
 .searchbox {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 692px;
-  height: 48px;
+  max-width: 686px;
+  height: 50px;
   background: var(--box-bg);
   border: 1px solid var(--box-border);
-  border-radius: 24px;
-  padding: 0 8px 0 6px;
+  border-radius: 26px;
+  padding: 0 8px 0 0;
   box-shadow: var(--box-shadow);
 }
-.searchbox:hover, .searchbox:focus-within {
-  box-shadow: var(--box-shadow-hover);
-}
+.searchbox:hover, .searchbox:focus-within { box-shadow: var(--box-shadow-hover); }
 .searchbox input {
   flex: 1;
   min-width: 0;
-  height: 36px;
+  height: 100%;
   border: 0;
   outline: 0;
   background: transparent;
   color: var(--text);
   font-family: var(--sans);
   font-size: 16px;
-  padding: 0 6px;
+  line-height: 22px;
 }
 .sb-icon {
-  width: 36px; height: 36px;
+  width: 40px; height: 40px;
   display: grid; place-items: center;
   background: none; border: 0; cursor: pointer;
   border-radius: 50%;
@@ -210,24 +236,25 @@ button { font-family: var(--sans); }
   flex-shrink: 0;
 }
 .sb-icon:hover { background: var(--hover-veil); }
-.sb-tools { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+.sb-plus { margin-left: 3px; }
+.sb-tools { display: flex; align-items: center; flex-shrink: 0; }
 
 .ai-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  height: 32px;
-  padding: 0 12px 0 9px;
-  margin-left: 4px;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px 0 8px;
+  margin-left: 6px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 100px;
   background: var(--pill-bg);
-  color: var(--text-2);
+  color: var(--text);
   font-size: 14px;
   cursor: pointer;
   white-space: nowrap;
 }
-.ai-pill:hover { filter: brightness(0.96); }
+.ai-pill:hover { filter: brightness(1.08); }
 
 /* ---------- 첫 화면 ---------- */
 .home-main {
@@ -235,61 +262,56 @@ button { font-family: var(--sans); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(70px, 19vh, 220px) 20px 0;
+  padding: clamp(90px, 17vh, 258px) 20px 0;
 }
 .home-logo {
-  font-size: 70px;
-  margin-bottom: 30px;
+  /* 구글 로고 272x92. Poppins 로 같은 폭이 나오는 크기 */
+  font-size: 81px;
+  margin-bottom: 22px;
   font-weight: 500;
 }
-.home-form {
-  width: 100%;
-  max-width: 692px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.home-buttons { display: flex; gap: 11px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+.home-form { width: 100%; max-width: 686px; display: flex; flex-direction: column; align-items: center; }
+.home-buttons { display: flex; margin-top: 18px; flex-wrap: wrap; justify-content: center; }
 
 .gbtn {
   background: var(--btn-bg);
   border: 1px solid var(--btn-border);
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--btn-text);
   font-size: 14px;
+  font-weight: 500;
   height: 36px;
-  min-width: 54px;
   padding: 0 16px;
+  margin: 11px 4px;
   cursor: pointer;
 }
-.gbtn:hover {
-  border-color: var(--btn-border-hover);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  color: var(--text);
-}
+.gbtn:hover { border-color: var(--btn-border-hover); }
 
 /* ---------- 푸터 ---------- */
 .foot {
   background: var(--foot-bg);
-  border-top: 1px solid var(--foot-border);
   font-size: 14px;
   color: var(--foot-text);
   margin-top: auto;
 }
-.foot__region { padding: 15px 30px; border-bottom: 1px solid var(--foot-border); }
-.foot__row { display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 10px; }
+.foot__region {
+  padding: 15px 30px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--foot-border);
+}
+.foot__row { display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 5px; }
 .foot__row ul { display: flex; flex-wrap: wrap; }
-.foot__row a { display: block; padding: 15px 15px; }
+.foot__row a { display: block; padding: 15px; }
 .foot__row a:hover { text-decoration: underline; }
 
-@media (max-width: 640px) {
-  .home-logo { font-size: 46px; margin-bottom: 24px; }
+@media (max-width: 700px) {
+  .home-logo { font-size: 46px; margin-bottom: 22px; }
   .home-main { padding-top: 60px; }
   .ai-pill span { display: none; }
   .ai-pill { padding: 0 8px; }
-  .topbar { padding: 6px 10px 0; }
-  .topbar nav { gap: 10px; }
-  .signin { padding: 8px 14px; }
+  .topbar { padding: 8px 8px 0; }
+  .topbar__left a { margin: 0 4px; }
+  .topbar__right { gap: 8px; }
   .foot__row { justify-content: center; }
 }
 
