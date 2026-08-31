@@ -1,15 +1,20 @@
 ---
 import Icons from './Icons.astro';
 import AccountButton from './AccountButton.astro';
+import Wordmark from './Wordmark.astro';
 import { SITE } from '../consts';
 import { url } from '../lib/url';
 ---
 <header class="topbar">
   <nav class="topbar__left">
-    <a href={url('/about')}>{SITE.title} 정보</a>
-    <a href={url('/archive')}>스토어</a>
+    <a class="topbar__logo" href={url('/')} aria-label={`${SITE.title} 홈페이지로 이동`}><Wordmark /></a>
   </nav>
   <nav class="topbar__right">
+    <button class="iconbtn" type="button" aria-label="공유" title="공유">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M16 5l-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.11 0-2-.9-2-2V10c0-1.11.89-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .89 2 2z"/>
+      </svg>
+    </button>
     <a href={`mailto:${SITE.email}`} data-mail-open>메일</a>
     <a href={url('/archive')}>이미지</a>
     <button class="iconbtn" type="button" aria-label="앱" title="앱 (장식)"><Icons name="apps" size={24} /></button>

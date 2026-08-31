@@ -31,11 +31,10 @@
   min-height: 60px;
 }
 .topbar nav { display: flex; align-items: center; }
-.topbar__left a {
-  font-size: 14px;
-  color: var(--text);
-  padding: 5px;
-  margin: 0 5px 0 15px;
+.topbar__logo {
+  /* 구글 SERP 로고 92x30. 홈 로고(81px=272px폭) 비율 환산 */
+  font-size: 27px;
+  padding: 5px 10px;
 }
 .topbar__right { gap: 15px; }
 /* 구글은 Gmail↔이미지↔앱 은 15px, 앱↔아바타만 8px 이다 */
@@ -44,7 +43,7 @@
   font-size: 13px;
   color: var(--toplink);
 }
-.topbar__left a:hover, .topbar__right > a:not(.signin):hover { text-decoration: underline; }
+.topbar__right > a:not(.signin):hover { text-decoration: underline; }
 
 .iconbtn {
   width: 40px; height: 40px;
@@ -88,7 +87,6 @@
   .ai-pill span { display: none; }
   .ai-pill { padding: 0 8px; }
   .topbar { padding: 8px 8px 0; }
-  .topbar__left a { margin: 0 4px; }
   .topbar__right { gap: 8px; }
   .foot__row { justify-content: center; }
 }
