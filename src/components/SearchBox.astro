@@ -1,24 +1,70 @@
 ---
 import Icons from './Icons.astro';
 import { url } from '../lib/url';
+import { getPosts } from '../lib/posts';
+
 interface Props { value?: string; autofocus?: boolean; }
 const { value = '', autofocus = false } = Astro.props;
+
+/* 첫 방문자를 위한 발견 경로.
+   구글이 빈 검색창을 누르면 최근 검색어를 띄우는 자리를 최근 글로 쓴다. */
+const recent = (await getPosts()).slice(0, 5);
 ---
-<form class="searchbox" action={url('/search')} method="get" role="search">
-  <button class="sb-icon sb-plus" type="button" aria-label="추가" title="장식"><Icons name="plus" size={24} /></button>
-  <input
-    type="text"
-    name="q"
-    value={value}
-    autocomplete="off"
-    spellcheck="false"
-    aria-label="검색"
-    autofocus={autofocus}
-  />
-  <div class="sb-tools">
-    <button class="sb-icon" type="button" aria-label="키보드" title="장식"><Icons name="keyboard" size={24} /></button>
-    <button class="sb-icon" type="button" aria-label="음성 검색" title="장식"><Icons name="mic" size={24} /></button>
-    <button class="sb-icon" type="button" aria-label="이미지 검색" title="장식"><Icons name="lens" size={24} /></button>
-    <button class="ai-pill" type="button" title="장식"><Icons name="ai" size={20} /><span>AI 모드</span></button>
+<form class="sb" action={url('/search')} method="get" role="search" data-sb>
+  <div class="sb__row">
+    <button class="sb-icon sb-plus" type="button" aria-label="추가" title="장식"><Icons name="plus" size={24} /></button>
+    <input
+      type="text"
+      name="q"
+      value={value}
+      autocomplete="off"
+      spellcheck="false"
+      aria-label="검색"
+      aria-expanded="false"
+      aria-controls="sb-panel"
+      autofocus={autofocus}
+      data-sb-input
+    />
+    <div class="sb-tools">
+      <button class="sb-icon" type="button" aria-label="키보드" title="장식"><Icons name="keyboard" size={24} /></button>
+      <button class="sb-icon" type="button" aria-label="음성 검색" title="장식"><Icons name="mic" size={24} /></button>
+      <button class="sb-icon" type="button" aria-label="이미지 검색" title="장식"><Icons name="lens" size={24} /></button>
+      <button class="ai-pill" type="button" title="장식"><Icons name="ai" size={20} /><span>AI 모드</span></button>
+    </div>
+  </div>
+
+  <div class="sb__panel" id="sb-panel" role="listbox" hidden data-sb-panel>
+    <div class="sb__sep"></div>
+    {recent.map((post) => (
+      <a class="sb__row-item" role="option" href={url('/post/' + post.id)}>
+        <span class="sb__ico"><Icons name="clock" size={20} /></span>
+        <span class="sb__txt">{post.data.title}</span>
+      </a>
+    ))}
+    <div class="sb__sep"></div>
+    <a class="sb__all" href={url('/search')}>전체 글 보기</a>
   </div>
 </form>
+
+<script>
+  const form = document.querySelector<HTMLElement>('[data-sb]');
+  const input = document.querySelector<HTMLInputElement>('[data-sb-input]');
+  const panel = document.querySelector<HTMLElement>('[data-sb-panel]');
+
+  const openPanel = (on: boolean) => {
+    if (!form || !panel || !input) return;
+    panel.hidden = !on;
+    form.classList.toggle('is-open', on);
+    input.setAttribute('aria-expanded', String(on));
+  };
+
+  input?.addEventListener('focus', () => openPanel(true));
+  input?.addEventListener('click', (e) => { e.stopPropagation(); openPanel(true); });
+
+  document.addEventListener('click', (e) => {
+    if (form && !form.contains(e.target as Node)) openPanel(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel && !panel.hidden) { openPanel(false); input?.blur(); }
+  });
+</script>

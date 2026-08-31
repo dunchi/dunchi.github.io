@@ -1,6 +1,6 @@
 ---
 interface Props {
-  name: 'search' | 'plus' | 'keyboard' | 'mic' | 'lens' | 'apps' | 'ai';
+  name: 'search' | 'plus' | 'keyboard' | 'mic' | 'lens' | 'apps' | 'ai' | 'clock';
   size?: number;
 }
 const { name, size = 24 } = Astro.props;
@@ -50,5 +50,11 @@ const { name, size = 24 } = Astro.props;
     <circle cx="10.5" cy="10.5" r="6.2" stroke="currentColor" stroke-width="1.7"/>
     <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="m15.2 15.2 4 4"/>
     <path fill="currentColor" d="M10.5 6.6l.85 2.05 2.05.85-2.05.85-.85 2.05-.85-2.05-2.05-.85 2.05-.85z"/>
+  </svg>
+)}
+
+{name === 'clock' && (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 2.05 4.95l-1.42 1.42A9 9 0 1 0 13 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
   </svg>
 )}
