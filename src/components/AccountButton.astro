@@ -2,7 +2,7 @@
 import { SITE } from '../consts';
 import { url } from '../lib/url';
 /* 구글 실측:
-   - 래퍼 <a> 40x40, padding 4px, radius 50%
+   - 래퍼 40x40, padding 4px, radius 50%
    - 안쪽 이미지 32x32 원형
    - 40x40 SVG 링 4조각 (#F6AD01 #249A41 #3174F1 #E92D18) */
 const RING = [
@@ -49,41 +49,48 @@ const photo = url('/profile.jpg');
   </div>
 </div>
 
-  <div class="lightbox" hidden data-photo-box>
-    <button class="lightbox__close" type="button" aria-label="닫기" data-photo-close>✕</button>
-    <img src={photo} alt={`${SITE.author} 프로필 사진`} />
-  </div>
+<div class="lightbox" hidden data-photo-box>
+  <button class="lightbox__close" type="button" aria-label="닫기" data-photo-close>✕</button>
+  <img src={photo} alt={`${SITE.author} 프로필 사진`} />
 </div>
 
 <script>
   const acctBtn = document.querySelector<HTMLButtonElement>('[data-acct-btn]');
   const acctCard = document.querySelector<HTMLElement>('[data-acct-card]');
   const acctClose = document.querySelector<HTMLButtonElement>('[data-acct-close]');
+  const photoBox = document.querySelector<HTMLElement>('[data-photo-box]');
 
   const openAcct = (on: boolean) => {
     if (!acctCard || !acctBtn) return;
     acctCard.hidden = !on;
     acctBtn.setAttribute('aria-expanded', String(on));
   };
+  const openPhoto = (on: boolean) => {
+    if (photoBox) photoBox.hidden = !on;
+  };
 
   acctBtn?.addEventListener('click', (e) => { e.stopPropagation(); openAcct(acctCard?.hidden ?? true); });
   acctClose?.addEventListener('click', () => openAcct(false));
-  document.addEventListener('click', (e) => {
-    if (acctCard && !acctCard.hidden && !acctCard.contains(e.target as Node)) openAcct(false);
-  });
+
   // 카드 안 사진을 누르면 원본을 띄운다
-  const box = document.querySelector<HTMLElement>('[data-photo-box]');
-  const openPhoto = (on: boolean) => { if (box) box.hidden = !on; };
   document.querySelector('[data-photo-open]')?.addEventListener('click', (e) => {
     e.stopPropagation();
     openPhoto(true);
   });
-  document.querySelector('[data-photo-close]')?.addEventListener('click', () => openPhoto(false));
-  box?.addEventListener('click', () => openPhoto(false));
+  document.querySelector('[data-photo-close]')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openPhoto(false);
+  });
+  photoBox?.addEventListener('click', () => openPhoto(false));
+
+  document.addEventListener('click', (e) => {
+    if (photoBox && !photoBox.hidden) return;          // 원본 보는 중엔 카드를 건드리지 않는다
+    if (acctCard && !acctCard.hidden && !acctCard.contains(e.target as Node)) openAcct(false);
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    if (box && !box.hidden) { openPhoto(false); return; }
+    if (photoBox && !photoBox.hidden) { openPhoto(false); return; }
     openAcct(false);
   });
 </script>
