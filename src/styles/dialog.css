@@ -162,3 +162,7 @@
   color: #5f6368;
 }
 .info__note b { color: #1f1f1f; font-weight: 600; }
+
+/* 안내문 본문 안의 링크 */
+.info__p a { color: #1a73e8; }
+.info__p a:hover { text-decoration: underline; }
