@@ -11,22 +11,12 @@
   top: 0;
   z-index: 10;
 }
-.serp-head__in {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  padding: 20px 20px 0 30px;
-  flex-wrap: wrap;
-}
-.serp-logo { font-size: 26px; flex-shrink: 0; padding-bottom: 6px; }
-.serp-head .sb { max-width: 692px; flex: 1; min-width: 260px; }
-.serp-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
-
 .serp-tabs {
   display: flex;
   gap: 4px;
-  padding: 0 20px 0 30px;
-  margin-top: 12px;
+  /* 구글: 탭 88~136, 좌측선이 검색창 179 와 맞는다 (링크 padding 12 제외) */
+  padding: 0 20px 0 167px;
+  margin-top: 10px;
   overflow-x: auto;
   scrollbar-width: none;
 }

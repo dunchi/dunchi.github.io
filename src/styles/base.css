@@ -27,16 +27,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 15px 0;
-  min-height: 60px;
+  /* 구글 홈: 아이콘 8~48, 중심 28, 우측 끝 여백 10px */
+  padding: 8px 10px;
+  min-height: 56px;
 }
+/* 유튜브식 타이트 헤더: 56 = 8 + 40 + 8. 검색창이 정확히 세로 중앙에 앉는다.
+   가로 배치(로고 43, 검색창 179 폭 861, 우측 여백 35)는 구글 SERP 실측값 그대로. */
+.topbar--serp {
+  padding: 8px 35px 8px 33px;
+  min-height: 56px;
+}
+.topbar--serp .sb__row { height: 38px; }
+.topbar--serp .sb { border-radius: 20px; }
+.topbar--serp .sb.is-open { border-radius: 20px 20px 0 0; }
+.topbar--serp .sb-icon { width: 32px; height: 32px; }
 .topbar nav { display: flex; align-items: center; }
-.topbar__left a {
-  font-size: 14px;
-  color: var(--text);
-  padding: 5px;
-  margin: 0 5px 0 15px;
+.topbar__logo {
+  /* 구글 SERP 로고 92x30. 홈 로고(81px=272px폭) 비율 환산 */
+  font-size: 27px;
+  padding: 5px 10px;
+  /* inline-flex 워드마크의 baseline 여백이 붙어 헤더를 1px 늘린다 */
+  display: flex;
 }
+/* 구글 SERP 검색창 l179 w861. 로고 끝 134 + 로고 padding 10 + 35 = 179 */
+.topbar .sb { flex: 1; max-width: 861px; min-width: 260px; margin: 0 auto 0 35px; }
 .topbar__right { gap: 15px; }
 /* 구글은 Gmail↔이미지↔앱 은 15px, 앱↔아바타만 8px 이다 */
 .topbar__right > .account { margin-left: -7px; }
@@ -44,7 +58,7 @@
   font-size: 13px;
   color: var(--toplink);
 }
-.topbar__left a:hover, .topbar__right > a:not(.signin):hover { text-decoration: underline; }
+.topbar__right > a:not(.signin):hover { text-decoration: underline; }
 
 .iconbtn {
   width: 40px; height: 40px;
@@ -88,7 +102,6 @@
   .ai-pill span { display: none; }
   .ai-pill { padding: 0 8px; }
   .topbar { padding: 8px 8px 0; }
-  .topbar__left a { margin: 0 4px; }
   .topbar__right { gap: 8px; }
   .foot__row { justify-content: center; }
 }
