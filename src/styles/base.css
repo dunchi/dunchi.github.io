@@ -16,11 +16,6 @@
 .wordmark span:nth-child(6n + 4) { color: var(--g-blue); }
 .wordmark span:nth-child(6n + 5) { color: var(--g-green); }
 .wordmark span:nth-child(6n + 6) { color: var(--g-red); }
-/* 다크에서는 구글도 로고가 흰색 단색이다. 색을 남기려면 이 두 블록만 지우면 된다. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .wordmark span { color: #fff; }
-}
-:root[data-theme='dark'] .wordmark span { color: #fff; }
 
 /* ---------- 상단바 ---------- */
 .topbar {
