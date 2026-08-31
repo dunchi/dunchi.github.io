@@ -21,7 +21,7 @@ const ids = posts.map((p) => url('/post/' + p.id));
     <div class="home-form">
       <SearchBox autofocus />
       <div class="home-buttons">
-        <button class="gbtn" type="button" data-search>{SITE.title} 검색</button>
+        <button class="gbtn" type="button" data-google>Google 검색</button>
         <button class="gbtn" type="button" data-lucky>I'm Feeling Lucky</button>
       </div>
     </div>
@@ -34,7 +34,13 @@ const ids = posts.map((p) => url('/post/' + p.id));
     const form = document.querySelector('.searchbox');
     const input = form?.querySelector('input[name="q"]');
 
-    document.querySelector('[data-search]')?.addEventListener('click', () => form?.requestSubmit());
+    // 진짜 구글로 보낸다. 입력값이 있으면 그 검색어까지 들고 간다.
+    document.querySelector('[data-google]')?.addEventListener('click', () => {
+      const q = (input?.value || '').trim();
+      location.href = q
+        ? 'https://www.google.com/search?q=' + encodeURIComponent(q)
+        : 'https://www.google.com';
+    });
 
     document.querySelector('[data-lucky]')?.addEventListener('click', () => {
       if (!ids.length) return;
