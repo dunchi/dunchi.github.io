@@ -1,5 +1,6 @@
 ---
 import Icons from './Icons.astro';
+import AccountButton from './AccountButton.astro';
 import { SITE } from '../consts';
 import { url } from '../lib/url';
 ---
@@ -12,6 +13,6 @@ import { url } from '../lib/url';
     <a href={url('/tags')}>메일</a>
     <a href={url('/archive')}>이미지</a>
     <button class="iconbtn" type="button" aria-label="앱" title="앱 (장식)"><Icons name="apps" size={24} /></button>
-    <a class="signin" href={SITE.github}>로그인</a>
+    <AccountButton />
   </nav>
 </header>

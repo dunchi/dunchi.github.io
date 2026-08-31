@@ -1,5 +1,6 @@
 ---
 import Icons from './Icons.astro';
+import AccountButton from './AccountButton.astro';
 import SearchBox from './SearchBox.astro';
 import Wordmark from './Wordmark.astro';
 import { SITE } from '../consts';
@@ -15,7 +16,7 @@ const all = [{ label: '전체', href: url('/search') }, ...tabs];
     <SearchBox value={q} />
     <div class="serp-actions">
       <button class="iconbtn" type="button" aria-label="앱" title="장식"><Icons name="apps" size={24} /></button>
-      <a class="signin" href={SITE.github}>로그인</a>
+      <AccountButton />
     </div>
   </div>
   <nav class="serp-tabs">
