@@ -46,9 +46,15 @@
 }
 /* 구글 SERP 검색창 l179 w861. 로고 끝 134 + 로고 padding 10 + 35 = 179 */
 .topbar .sb { flex: 1; max-width: 861px; min-width: 260px; margin: 0 auto 0 35px; }
-.topbar__right { gap: 15px; }
-/* 구글은 Gmail↔이미지↔앱 은 15px, 앱↔아바타만 8px 이다 */
-.topbar__right > .account { margin-left: -7px; }
+.topbar__right { gap: 0; }
+/* 아이콘 버튼은 40px 박스에 8px 패딩이라, 그냥 gap 을 주면
+   글자 링크보다 시각적 간격이 훨씬 넓어 보인다.
+   각자 안쪽 패딩만큼 당겨서 '보이는 간격'을 15px 로 통일한다. */
+.topbar__right > * { margin-left: 15px; }
+.topbar__right > *:first-child { margin-left: 0; }
+.topbar__right > .iconbtn { margin-left: 6px; }
+.topbar__right > .iconbtn + .iconbtn { margin-left: -2px; }
+.topbar__right > .account { margin-left: 7px; }
 .topbar__right > a:not(.signin) {
   font-size: 13px;
   color: var(--toplink);
@@ -97,7 +103,7 @@
   .ai-pill span { display: none; }
   .ai-pill { padding: 0 8px; }
   .topbar { padding: 8px 8px 0; }
-  .topbar__right { gap: 8px; }
+  .topbar__right > * { margin-left: 8px; }
   .foot__row { justify-content: center; }
 }
 
