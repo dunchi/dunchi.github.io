@@ -41,7 +41,7 @@ const ACTIONS = [
   { n: 'more', icon: 'morevert', l: '옵션 더보기' },
 ] as const;
 ---
-<div class="compose" hidden data-mail>
+<div class="compose no-tools" hidden data-mail>
   <div class="compose__head">
     <span class="compose__title">새 메일</span>
     <div class="compose__acts">
@@ -128,7 +128,7 @@ const ACTIONS = [
       panel.classList.toggle('no-tools');
       fmt.classList.toggle('is-on', !panel.classList.contains('no-tools'));
     });
-    fmt?.classList.add('is-on');
+
 
     // 본문 비어 있으면 플레이스홀더
     const sync = () => text.classList.toggle('is-empty', !text.textContent.trim());

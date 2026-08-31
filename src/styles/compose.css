@@ -198,7 +198,14 @@
   background: rgba(60, 64, 67, 0.12);
   box-shadow: 0 0 0 4px rgba(60, 64, 67, 0.12);
 }
-.compose__aa { font-size: 14px; font-weight: 500; line-height: 1; }
+.compose__aa {
+  /* Gmail 은 Google Sans 20px 글리프로 그린다. Roboto 로 대체. */
+  font-family: Roboto, arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
 .compose__act.is-on {
   background: #d3e3fd;
   box-shadow: 0 0 0 4px #d3e3fd;
