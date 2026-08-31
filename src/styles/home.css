@@ -1,0 +1,141 @@
+/* 첫 화면: 검색창, 자동완성 패널, 로고, 버튼.
+   이 파일만 고치면 다른 화면에 영향이 없다. */
+
+/* ---------- 검색창 ----------
+   구글 실측: 바깥 688x52 / radius 26 / 안쪽 686x50
+   자동완성 열림: 행 31px, 아이콘 20px, 왼쪽 여백 14px,
+                 그림자 rgba(23,23,23,.9) 0 4px 12px */
+.sb {
+  position: relative;
+  width: 100%;
+  max-width: 688px;
+  background: var(--box-bg);
+  border: 1px solid var(--box-border);
+  border-radius: 26px;
+  box-shadow: var(--box-shadow);
+}
+/* 열리면 아래 모서리를 각지게 하고, 패널이 그 아래로 이어진다.
+   패널은 absolute 라 버튼을 밀어내지 않고 덮는다 — 구글과 같다. */
+.sb.is-open {
+  border-radius: 26px 26px 0 0;
+  border-bottom-color: transparent;
+  box-shadow: var(--sb-open-shadow);
+}
+
+.sb__row {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 8px 0 0;
+}
+.sb:hover:not(.is-open), .sb:focus-within:not(.is-open) { box-shadow: var(--box-shadow-hover); }
+
+.sb input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 22px;
+}
+.sb-icon {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: none; border: 0; cursor: pointer;
+  border-radius: 50%;
+  color: var(--icon);
+  flex-shrink: 0;
+}
+.sb-icon:hover { background: var(--hover-veil); }
+.sb-plus { margin-left: 3px; }
+.sb-tools { display: flex; align-items: center; flex-shrink: 0; }
+
+.ai-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px 0 8px;
+  margin-left: 6px;
+  border: 0;
+  border-radius: 100px;
+  background: var(--pill-bg);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ai-pill:hover { filter: brightness(1.08); }
+
+/* ---------- 자동완성 패널 ---------- */
+.sb__panel {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  z-index: 20;
+  background: var(--box-bg);
+  border: 1px solid var(--box-border);
+  border-top: 0;
+  border-radius: 0 0 26px 26px;
+  box-shadow: var(--sb-open-shadow);
+  padding-bottom: 10px;
+}
+.sb__panel[hidden] { display: none; }
+.sb__sep { height: 1px; background: var(--box-sep); margin: 4px 0; }
+
+.sb__row-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 31px;
+  padding: 0 14px;
+  color: var(--text);
+  font-size: 14px;
+}
+.sb__row-item:hover { background: var(--hover-veil); text-decoration: none; }
+.sb__ico { color: var(--icon); display: grid; place-items: center; flex-shrink: 0; }
+.sb__txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.sb__all {
+  display: block;
+  padding: 8px 14px 4px;
+  font-size: 14px;
+  color: var(--link-blue);
+}
+.sb__all:hover { text-decoration: underline; }
+
+/* ---------- 첫 화면 ---------- */
+.home-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(90px, 17vh, 258px) 20px 0;
+}
+.home-logo {
+  /* 구글 로고 272x92. Poppins 로 같은 폭이 나오는 크기 */
+  font-size: 81px;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+.home-form { width: 100%; max-width: 688px; display: flex; flex-direction: column; align-items: center; }
+.home-buttons { display: flex; margin-top: 18px; flex-wrap: wrap; justify-content: center; }
+
+.gbtn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: 8px;
+  color: var(--btn-text);
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  padding: 0 16px;
+  margin: 11px 4px;
+  cursor: pointer;
+}
+.gbtn:hover { border-color: var(--btn-border-hover); }

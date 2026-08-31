@@ -1,0 +1,202 @@
+/* 메일 작성창: 헤더, 본문, 서식 툴바, 액션 바.
+   이 파일만 고치면 다른 화면에 영향이 없다. */
+
+/* ---------- 메일 작성창 (Gmail CDP 실측) ----------
+   창 600x616 / 우측하단 밀착 / radius 8px 8px 0 0
+   헤더 40px #f2f6fc, 버튼 24x24 @508·536·564
+   툴바 x16 565x40 #f2f6fc radius 24px padding 10px 9px, 구분선 1x20 #c4c7c5
+   액션 보내기 72x36 + 33x36 (#0b57d0), 아이콘 20x20 radius 2px 32px 간격 */
+.compose {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 600px;
+  max-width: 100vw;
+  height: 616px;
+  max-height: 100vh;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #202124;
+  border-radius: 8px 8px 0 0;
+  box-shadow: rgba(0, 0, 0, 0.14) 0 8px 10px 1px, rgba(0, 0, 0, 0.12) 0 3px 14px;
+  overflow: hidden;
+  font-family: var(--sans);
+}
+.compose[hidden] { display: none; }
+.compose.is-min { height: 40px; }
+.compose.is-min .compose__body,
+.compose.is-min .compose__tools,
+.compose.is-min .compose__foot { display: none; }
+.compose.no-tools .compose__tools { display: none; }
+
+.compose__head {
+  flex-shrink: 0;
+  height: 40px;
+  background: #f2f6fc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.compose__acts { display: flex; gap: 4px; }
+.compose__acts button {
+  width: 24px; height: 24px;
+  border: 0; background: none; cursor: pointer;
+  color: #202124;
+  display: grid; place-items: center;
+  border-radius: 50%;
+}
+.compose__acts button:hover { background: rgba(60, 64, 67, 0.12); }
+
+.compose__body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.compose__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #5f6368;
+}
+.compose__field span { flex-shrink: 0; }
+.compose__field input {
+  flex: 1; min-width: 0;
+  border: 0; outline: 0; background: transparent;
+  color: #202124;
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 6px 0;
+}
+.compose__field input[readonly] { color: #5f6368; }
+
+.compose__text {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  outline: 0;
+  color: #202124;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 12px 16px;
+}
+.compose__text.is-empty::before {
+  content: attr(data-ph);
+  color: #5f6368;
+  pointer-events: none;
+}
+.compose__text blockquote {
+  margin: 0 0 0 8px;
+  padding-left: 12px;
+  border-left: 2px solid #ccc;
+  color: #5f6368;
+}
+.compose__text ul { list-style: disc; padding-left: 26px; }
+.compose__text ol { list-style: decimal; padding-left: 26px; }
+
+/* ---------- 서식 툴바 ---------- */
+.compose__tools {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 40px;
+  margin: 0 19px 0 16px;
+  padding: 10px 9px;
+  background: #f2f6fc;
+  border-radius: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.compose__tools::-webkit-scrollbar { display: none; }
+
+.compose__tool {
+  height: 20px;
+  min-width: 20px;
+  padding: 0;
+  margin: 0 5px;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: #444746;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.compose__tool:hover { background: rgba(60, 64, 67, 0.12); }
+.compose__tool.is-active { background: #d3e3fd; color: #041e49; }
+.compose__tool.is-wide { justify-content: space-between; }
+.compose__ttext {
+  font-size: 13px;
+  color: #444746;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compose__sep {
+  width: 1px;
+  height: 20px;
+  background: #c4c7c5;
+  margin: 0 5px;
+  flex-shrink: 0;
+}
+
+/* ---------- 액션 바 ---------- */
+.compose__foot {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 15px 16px 13px;
+  gap: 12px;
+}
+.compose__send { display: flex; flex-shrink: 0; }
+.compose__send-main {
+  height: 36px;
+  min-width: 72px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 18px 0 0 18px;
+  background: #0b57d0;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.compose__send-caret {
+  width: 33px; height: 36px;
+  border: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0 18px 18px 0;
+  background: #0b57d0;
+  color: #fff;
+  cursor: pointer;
+  display: grid; place-items: center;
+}
+.compose__send-main:hover, .compose__send-caret:hover { background: #0a4fbd; }
+
+.compose__act {
+  width: 20px; height: 20px;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: #444746;
+  cursor: pointer;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+.compose__act:hover { background: rgba(60, 64, 67, 0.12); }
+.compose__aa { font-size: 13px; font-weight: 500; line-height: 1; }
+.compose__act.is-on { background: #d3e3fd; color: #041e49; }
+.compose__trash { margin-left: auto; }
+
+@media (max-width: 640px) {
+  .compose { width: 100vw; height: 100vh; border-radius: 0; }
+}

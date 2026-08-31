@@ -1,0 +1,149 @@
+/* 리셋, 본문, 워드마크, 상단바, 푸터, 설정 메뉴.
+   이 파일만 고치면 다른 화면에 영향이 없다. */
+
+/* ---------- 워드마크 ---------- */
+.wordmark {
+  font-family: var(--wordmark);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  line-height: 1;
+  user-select: none;
+}
+.wordmark span:nth-child(6n + 1) { color: var(--g-blue); }
+.wordmark span:nth-child(6n + 2) { color: var(--g-red); }
+.wordmark span:nth-child(6n + 3) { color: var(--g-yellow); }
+.wordmark span:nth-child(6n + 4) { color: var(--g-blue); }
+.wordmark span:nth-child(6n + 5) { color: var(--g-green); }
+.wordmark span:nth-child(6n + 6) { color: var(--g-red); }
+/* 다크에서는 구글도 로고가 흰색 단색이다. 색을 남기려면 이 두 블록만 지우면 된다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .wordmark span { color: #fff; }
+}
+:root[data-theme='dark'] .wordmark span { color: #fff; }
+
+/* ---------- 상단바 ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 15px 0;
+  min-height: 60px;
+}
+.topbar nav { display: flex; align-items: center; }
+.topbar__left a {
+  font-size: 14px;
+  color: var(--text);
+  padding: 5px;
+  margin: 0 5px 0 15px;
+}
+.topbar__right { gap: 15px; }
+/* 구글은 Gmail↔이미지↔앱 은 15px, 앱↔아바타만 8px 이다 */
+.topbar__right > .account { margin-left: -7px; }
+.topbar__right > a:not(.signin) {
+  font-size: 13px;
+  color: var(--toplink);
+}
+.topbar__left a:hover, .topbar__right > a:not(.signin):hover { text-decoration: underline; }
+
+.iconbtn {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: none; border: 0; cursor: pointer;
+  border-radius: 50%;
+  padding: 8px;
+  color: var(--icon);
+}
+.iconbtn:hover { background: var(--hover-veil); }
+
+.signin {
+  background: var(--signin-bg);
+  color: var(--signin-text) !important;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 12px;
+  min-width: 85px;
+  text-align: center;
+  border: 0;
+  border-radius: 100px;
+}
+.signin:hover { filter: brightness(0.95); }
+
+/* ---------- 푸터 ---------- */
+.foot {
+  background: var(--foot-bg);
+  font-size: 14px;
+  color: var(--foot-text);
+  margin-top: auto;
+}
+.foot__region {
+  padding: 15px 30px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--foot-border);
+}
+.foot__row { display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 5px; }
+.foot__row ul { display: flex; flex-wrap: wrap; }
+.foot__row a { display: block; padding: 15px; }
+.foot__row a:hover { text-decoration: underline; }
+
+@media (max-width: 700px) {
+  .home-logo { font-size: 46px; margin-bottom: 22px; }
+  .home-main { padding-top: 60px; }
+  .ai-pill span { display: none; }
+  .ai-pill { padding: 0 8px; }
+  .topbar { padding: 8px 8px 0; }
+  .topbar__left a { margin: 0 4px; }
+  .topbar__right { gap: 8px; }
+  .foot__row { justify-content: center; }
+}
+
+/* ---------- 설정 메뉴 (푸터 우측 하단) ----------
+   구글 실측: 폭 210px, radius 8px, padding 5px 0,
+   항목 높이 31px / padding 4px 16px / 14px,
+   우측 정렬 + 메뉴 하단이 트리거 상단에 붙는다. */
+.setmenu { position: relative; }
+.setmenu__btn {
+  display: block;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+  font-size: 14px;
+  padding: 15px;
+  font-family: var(--sans);
+  line-height: inherit;
+}
+.setmenu__btn:hover { text-decoration: underline; }
+
+.setmenu__pop {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 210px;
+  background: var(--menu-bg);
+  border-radius: 8px;
+  box-shadow: var(--menu-shadow);
+  padding: 5px 0;
+  z-index: 30;
+  text-align: left;
+}
+.setmenu__pop a,
+.setmenu__pop button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  height: 31px;
+  padding: 4px 16px;
+  font-size: 14px;
+  line-height: 23px;
+  color: var(--menu-text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.setmenu__pop a:hover,
+.setmenu__pop button:hover { background: var(--menu-hover); text-decoration: none; }
