@@ -64,7 +64,11 @@
   font-size: 14px;
   color: #5f6368;
 }
-.compose__field span { flex-shrink: 0; }
+.compose__field span {
+  flex-shrink: 0;
+  /* 라벨 폭을 고정해 행마다 입력칸 시작 위치를 맞춘다 */
+  width: 72px;
+}
 .compose__field input {
   flex: 1; min-width: 0;
   border: 0; outline: 0; background: transparent;
