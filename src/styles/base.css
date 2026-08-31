@@ -76,11 +76,7 @@
   color: var(--foot-text);
   margin-top: auto;
 }
-.foot__region {
-  padding: 15px 30px;
-  font-size: 15px;
-  border-bottom: 1px solid var(--foot-border);
-}
+.foot__region { padding: 15px; }
 .foot__row { display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 5px; }
 .foot__row ul { display: flex; flex-wrap: wrap; }
 .foot__row a { display: block; padding: 15px; }
