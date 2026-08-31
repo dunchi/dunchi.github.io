@@ -93,6 +93,17 @@ const ACTIONS = [
   </div>
 </div>
 
+<div class="mdlg" hidden data-mail-confirm>
+  <div class="mdlg__card" role="alertdialog" aria-labelledby="mdlg-t" aria-describedby="mdlg-b">
+    <h2 class="mdlg__title" id="mdlg-t">작성 중인 내용이 있습니다</h2>
+    <p class="mdlg__body" id="mdlg-b">지금 닫으면 저장되지 않습니다.</p>
+    <div class="mdlg__acts">
+      <button type="button" class="mdlg__btn" data-mail-keep>계속 작성</button>
+      <button type="button" class="mdlg__btn is-danger" data-mail-discard>닫기</button>
+    </div>
+  </div>
+</div>
+
 <script is:inline define:vars={{ to: SITE.email }}>
   (function () {
     const panel = document.querySelector('[data-mail]');
@@ -108,7 +119,34 @@ const ACTIONS = [
     document.querySelectorAll('[data-mail-open]').forEach((b) =>
       b.addEventListener('click', (e) => { e.preventDefault(); open(true); })
     );
-    panel.querySelector('[data-mail-close]')?.addEventListener('click', () => open(false));
+    const confirmBox = document.querySelector('[data-mail-confirm]');
+    const hasContent = () =>
+      !!(panel.querySelector('[data-mail-from]')?.value.trim() ||
+         subject?.value.trim() ||
+         text?.innerText.trim());
+    const wipe = () => {
+      const f = panel.querySelector('[data-mail-from]');
+      if (f) f.value = '';
+      if (subject) subject.value = '';
+      if (text) { text.innerHTML = ''; text.classList.add('is-empty'); }
+    };
+    const tryClose = () => {
+      if (hasContent()) { confirmBox.hidden = false; return; }
+      open(false);
+    };
+    panel.querySelector('[data-mail-close]')?.addEventListener('click', tryClose);
+    confirmBox?.querySelector('[data-mail-keep]')?.addEventListener('click', () => {
+      confirmBox.hidden = true;
+      text?.focus();
+    });
+    confirmBox?.querySelector('[data-mail-discard]')?.addEventListener('click', () => {
+      confirmBox.hidden = true;
+      wipe();
+      open(false);
+    });
+    confirmBox?.addEventListener('click', (e) => {
+      if (e.target === confirmBox) confirmBox.hidden = true;
+    });
     panel.querySelector('[data-mail-min]')?.addEventListener('click', () => panel.classList.toggle('is-min'));
     panel.querySelector('.compose__head')?.addEventListener('click', (e) => {
       if (e.target.closest('button')) return;
@@ -136,7 +174,9 @@ const ACTIONS = [
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !panel.hidden) open(false);
+      if (e.key !== 'Escape') return;
+      if (confirmBox && !confirmBox.hidden) { confirmBox.hidden = true; return; }
+      if (!panel.hidden) tryClose();
     });
   })();
 </script>

@@ -209,3 +209,62 @@
 @media (max-width: 640px) {
   .compose { width: 100vw; height: 100vh; border-radius: 0; }
 }
+
+/* ---------- 확인 다이얼로그 ----------
+   Gmail 에는 없는 화면이라 실측 원본이 없다.
+   Material 3 다이얼로그 규격으로 맞춤. */
+.mdlg {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0, 0, 0, 0.32);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.mdlg[hidden] { display: none; }
+
+.mdlg__card {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  color: #1f1f1f;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 3px, rgba(0, 0, 0, 0.15) 0 1px 3px;
+  font-family: var(--sans);
+}
+.mdlg__title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0 0 10px;
+}
+.mdlg__body {
+  font-size: 14px;
+  line-height: 20px;
+  color: #444746;
+  margin: 0;
+}
+.mdlg__acts {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+.mdlg__btn {
+  height: 40px;
+  padding: 0 12px;
+  min-width: 64px;
+  border: 0;
+  border-radius: 20px;
+  background: none;
+  color: #0b57d0;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.mdlg__btn:hover { background: rgba(11, 87, 208, 0.08); }
+.mdlg__btn.is-danger { color: #b3261e; }
+.mdlg__btn.is-danger:hover { background: rgba(179, 38, 30, 0.08); }
