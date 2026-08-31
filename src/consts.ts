@@ -16,6 +16,5 @@ export const LINKS = [
   { icon: 'tistory', label: '구 블로그', href: 'https://aiwcpd.tistory.com' },
   { icon: 'resume', label: '구 이력서', href: 'https://dunchi.github.io/docs/README.md.html' },
   { icon: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/channel/UCXkAt4TGK0L1NF8gr-LuZEQ' },
-  { icon: 'kakao', label: '카카오톡 오픈프로필', href: 'https://open.kakao.com/me/duunchi' },
-  { icon: 'kakao', label: '카카오톡 1:1 채팅', href: 'https://qr.kakao.com/talk/ttdkxGItTAuW66fBApxOAh5e_8I-' },
+  { icon: 'kakao', label: '카카오톡', href: 'https://open.kakao.com/me/duunchi' },
 ] as const;
