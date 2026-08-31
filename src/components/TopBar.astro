@@ -9,9 +9,9 @@ import { url } from '../lib/url';
 interface Props { q?: string; search?: boolean; }
 const { q = '', search = false } = Astro.props;
 ---
-<header class="topbar">
+<header class:list={['topbar', search && 'topbar--serp']}>
   <nav class="topbar__left">
-    <a class="topbar__logo" href={url('/')} aria-label={`${SITE.title} 홈페이지로 이동`}><Wordmark /></a>
+    {search && <a class="topbar__logo" href={url('/')} aria-label={`${SITE.title} 홈페이지로 이동`}><Wordmark /></a>}
   </nav>
   {search && <SearchBox value={q} />}
   <nav class="topbar__right">

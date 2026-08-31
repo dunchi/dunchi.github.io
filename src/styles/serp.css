@@ -14,8 +14,9 @@
 .serp-tabs {
   display: flex;
   gap: 4px;
-  padding: 0 20px 0 15px;
-  margin-top: 12px;
+  /* 구글: 탭 88~136, 좌측선이 검색창 179 와 맞는다 (링크 padding 12 제외) */
+  padding: 0 20px 0 167px;
+  margin-top: 10px;
   overflow-x: auto;
   scrollbar-width: none;
 }
