@@ -1,17 +1,53 @@
 ---
 import { SITE } from '../consts';
-/* Gmail 작성창 실측:
-   600x616 / 우측 71px / 하단 0 / radius 8px 8px 0 0
-   헤더 40px bg #f2f6fc fs 16px
-   본문 fs 13px / 받는사람·제목 fs 14px
-   그림자 rgba(0,0,0,.14) 0 8px 10px 1px, rgba(0,0,0,.12) 0 3px 14px */
+import I from './MailIcons.astro';
+/* Gmail 작성창 CDP 실측 (작성창 600x616 기준 좌표)
+   헤더    40px  bg #f2f6fc  radius 8 8 0 0   버튼 24x24 @508/536/564
+   툴바    x16 y512  565x40  bg #f2f6fc  radius 24px  padding 10px 9px
+           구분선 1x20 #c4c7c5
+   액션바  보내기 x16 72x36 radius 18/0/0/18  ▾ x88 33x36 radius 0/18/18/0  #0b57d0
+           아이콘 20x20 radius 2px, x=133부터 32px 간격, 삭제 x564 */
+const TOOLS = [
+  { n: 'undo', l: '실행취소' },
+  { n: 'redo', l: '재실행' },
+  '|',
+  { n: 'font', l: '글꼴', text: 'Sans Serif', w: 97 },
+  '|',
+  { n: 'size', l: '크기', icon: 'aa', w: 40, caret: true },
+  '|',
+  { n: 'bold', l: '굵게' },
+  { n: 'italic', l: '기울임꼴' },
+  { n: 'underline', l: '밑줄' },
+  { n: 'textcolor', l: '텍스트 색상', w: 40, caret: true },
+  '|',
+  { n: 'align', l: '정렬', w: 40, caret: true },
+  { n: 'numlist', l: '번호 매기기 목록' },
+  { n: 'bullist', l: '글머리 기호 목록' },
+  { n: 'outdent', l: '덜 들여쓰기' },
+  { n: 'indent', l: '더 들여쓰기' },
+  '|',
+  { n: 'more', l: '서식 지정 옵션 더보기', icon: 'caret' },
+] as const;
+
+const ACTIONS = [
+  { n: 'format', icon: 'aa', l: '서식 지정 옵션', text: 'Aa' },
+  { n: 'attach', icon: 'attach', l: '파일 첨부' },
+  { n: 'link', icon: 'link', l: '링크 삽입' },
+  { n: 'emoji', icon: 'emoji', l: '그림 이모티콘 삽입' },
+  { n: 'drive', icon: 'drive', l: 'Drive에 저장된 파일 삽입' },
+  { n: 'image', icon: 'image', l: '사진 삽입' },
+  { n: 'lock', icon: 'lock', l: '비밀 모드 전환' },
+  { n: 'sign', icon: 'pen', l: '서명 삽입' },
+  { n: 'more', icon: 'morevert', l: '옵션 더보기' },
+] as const;
 ---
 <div class="compose" hidden data-mail>
   <div class="compose__head">
-    <span class="compose__title" data-mail-title>새 메일 작성</span>
+    <span class="compose__title">새 메일 작성</span>
     <div class="compose__acts">
-      <button type="button" aria-label="최소화" data-mail-min>&#9472;</button>
-      <button type="button" aria-label="닫기" data-mail-close>&#10005;</button>
+      <button type="button" aria-label="최소화" data-mail-min><I name="minimize" size={20} /></button>
+      <button type="button" aria-label="전체 화면으로 보기"><I name="expand" size={18} /></button>
+      <button type="button" aria-label="저장 및 닫기" data-mail-close><I name="close" size={20} /></button>
     </div>
   </div>
 
@@ -23,12 +59,44 @@ import { SITE } from '../consts';
     <label class="compose__field">
       <input type="text" placeholder="제목" data-mail-subject />
     </label>
-    <textarea class="compose__text" placeholder="메일 본문" data-mail-text></textarea>
+    <div class="compose__text" contenteditable="true" data-mail-text data-ph="메일 본문"></div>
+  </div>
+
+  <div class="compose__tools" data-mail-tools>
+    {TOOLS.map((t) =>
+      t === '|' ? (
+        <span class="compose__sep"></span>
+      ) : (
+        <button
+          type="button"
+          class:list={['compose__tool', t.w ? 'is-wide' : '']}
+          style={t.w ? `width:${t.w}px` : undefined}
+          data-cmd={t.n}
+          aria-label={t.l}
+          title={t.l}
+        >
+          {'text' in t && t.text ? <span class="compose__ttext">{t.text}</span> : null}
+          {!('text' in t && t.text) && <I name={'icon' in t && t.icon ? t.icon : t.n} size={20} />}
+          {'caret' in t && t.caret ? <I name="caret" size={16} /> : null}
+          {'text' in t && t.text ? <I name="caret" size={16} /> : null}
+        </button>
+      )
+    )}
   </div>
 
   <div class="compose__foot">
-    <button class="compose__send" type="button" data-mail-send>보내기</button>
-    <span class="compose__note">메일 앱이 열립니다</span>
+    <div class="compose__send">
+      <button type="button" class="compose__send-main" data-mail-send>보내기</button>
+      <button type="button" class="compose__send-caret" aria-label="보내기 옵션 더보기"><I name="caret" size={18} /></button>
+    </div>
+    {ACTIONS.map((a) => (
+      <button type="button" class="compose__act" data-act={a.n} aria-label={a.l} title={a.l}>
+        {a.n === 'format' ? <span class="compose__aa">Aa</span> : <I name={a.icon} size={20} />}
+      </button>
+    ))}
+    <button type="button" class="compose__act compose__trash" aria-label="임시보관 메일 삭제" title="임시보관 메일 삭제">
+      <I name="trash" size={20} />
+    </button>
   </div>
 </div>
 
@@ -38,12 +106,12 @@ import { SITE } from '../consts';
     if (!panel) return;
     const subject = panel.querySelector('[data-mail-subject]');
     const text = panel.querySelector('[data-mail-text]');
+    const tools = panel.querySelector('[data-mail-tools]');
 
     const open = (on) => {
       panel.hidden = !on;
       if (on) { panel.classList.remove('is-min'); subject?.focus(); }
     };
-
     document.querySelectorAll('[data-mail-open]').forEach((b) =>
       b.addEventListener('click', (e) => { e.preventDefault(); open(true); })
     );
@@ -54,10 +122,21 @@ import { SITE } from '../consts';
       panel.classList.toggle('is-min');
     });
 
-    // 정적 사이트라 서버로 못 보낸다. 방문자의 메일 앱으로 넘긴다.
+    // Aa 로 서식 툴바 토글 (Gmail 과 동일)
+    const fmt = panel.querySelector('[data-act="format"]');
+    fmt?.addEventListener('click', () => {
+      panel.classList.toggle('no-tools');
+      fmt.classList.toggle('is-on', !panel.classList.contains('no-tools'));
+    });
+    fmt?.classList.add('is-on');
+
+    // 본문 비어 있으면 플레이스홀더
+    const sync = () => text.classList.toggle('is-empty', !text.textContent.trim());
+    text?.addEventListener('input', sync); sync();
+
     panel.querySelector('[data-mail-send]')?.addEventListener('click', () => {
       const s = encodeURIComponent(subject?.value || '');
-      const b = encodeURIComponent(text?.value || '');
+      const b = encodeURIComponent(text?.innerText || '');
       location.href = `mailto:${to}?subject=${s}&body=${b}`;
     });
 
