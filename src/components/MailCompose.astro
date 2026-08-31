@@ -114,8 +114,17 @@ const ACTIONS = [
 
     const open = (on) => {
       panel.hidden = !on;
+      const cb = document.querySelector('[data-mail-confirm]');
+      if (cb) cb.hidden = true;              // 남아 있는 다이얼로그가 화면을 덮지 않게
       if (on) { panel.classList.remove('is-min'); subject?.focus(); }
     };
+
+    // 본문(contenteditable)에 포커스가 있을 때 버튼을 누르면
+    // mousedown 이 먼저 blur 를 일으켜 click 이 유실된다.
+    // 버튼 위에서는 기본 포커스 이동을 막아 첫 클릭이 그대로 먹히게 한다.
+    panel.addEventListener('mousedown', (e) => {
+      if (e.target.closest('button')) e.preventDefault();
+    });
     document.querySelectorAll('[data-mail-open]').forEach((b) =>
       b.addEventListener('click', (e) => { e.preventDefault(); open(true); })
     );
