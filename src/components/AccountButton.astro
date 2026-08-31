@@ -12,6 +12,7 @@ const RING = [
   { fill: '#E92D18', d: 'M20,2c4.65,0,8.89,1.77,12.09,4.67l1.37-1.46C29.91,1.97,25.19,0,20,0l0,0C12.21,0,5.46,4.46,2.16,10.96L3.88,12C6.83,6.08,12.95,2,20,2' },
 ];
 const avatar = url('/avatar.jpg');
+const photo = url('/profile.jpg');
 ---
 <div class="account">
   <button
@@ -30,9 +31,11 @@ const avatar = url('/avatar.jpg');
 
   <div class="account__card" role="dialog" aria-label="프로필" hidden data-acct-card>
     <button class="account__close" type="button" aria-label="닫기" data-acct-close>✕</button>
-    <div class="account__handle">{SITE.github.replace('https://', '')}</div>
-    <img class="account__big" src={avatar} alt="" width="80" height="80" />
-    <div class="account__hi">안녕하세요, {SITE.author}님</div>
+    <div class="account__handle">{SITE.email}</div>
+    <button class="account__bigbtn" type="button" aria-label="사진 크게 보기" data-photo-open>
+      <img class="account__big" src={avatar} alt="" width="80" height="80" />
+    </button>
+    <div class="account__hi">{SITE.author}입니다.</div>
     <a class="account__pill" href={url('/about')}>프로필 보기</a>
     <div class="account__sep"></div>
     <a class="account__row" href={SITE.github}>GitHub</a>
@@ -43,6 +46,12 @@ const avatar = url('/avatar.jpg');
       <span>·</span>
       <a href={url('/archive')}>아카이브</a>
     </div>
+  </div>
+</div>
+
+  <div class="lightbox" hidden data-photo-box>
+    <button class="lightbox__close" type="button" aria-label="닫기" data-photo-close>✕</button>
+    <img src={photo} alt={`${SITE.author} 프로필 사진`} />
   </div>
 </div>
 
@@ -62,5 +71,19 @@ const avatar = url('/avatar.jpg');
   document.addEventListener('click', (e) => {
     if (acctCard && !acctCard.hidden && !acctCard.contains(e.target as Node)) openAcct(false);
   });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') openAcct(false); });
+  // 카드 안 사진을 누르면 원본을 띄운다
+  const box = document.querySelector<HTMLElement>('[data-photo-box]');
+  const openPhoto = (on: boolean) => { if (box) box.hidden = !on; };
+  document.querySelector('[data-photo-open]')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openPhoto(true);
+  });
+  document.querySelector('[data-photo-close]')?.addEventListener('click', () => openPhoto(false));
+  box?.addEventListener('click', () => openPhoto(false));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (box && !box.hidden) { openPhoto(false); return; }
+    openAcct(false);
+  });
 </script>

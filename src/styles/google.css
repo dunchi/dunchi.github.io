@@ -692,3 +692,38 @@ button { font-family: var(--sans); }
 
 /* display 를 선언한 요소는 [hidden] 이 안 먹는다. 명시적으로 꺼줘야 한다. */
 .account__card[hidden] { display: none; }
+
+.account__bigbtn {
+  border: 0; padding: 0; background: none; cursor: zoom-in;
+  border-radius: 50%; line-height: 0;
+}
+.account__bigbtn:hover { filter: brightness(0.92); }
+
+/* ---------- 사진 원본 보기 ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  max-width: min(92vw, 720px);
+  max-height: 86vh;
+  width: auto; height: auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+.lightbox__close {
+  position: absolute;
+  top: 16px; right: 20px;
+  width: 44px; height: 44px;
+  border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff; font-size: 16px; cursor: pointer;
+}
+.lightbox__close:hover { background: rgba(255, 255, 255, 0.22); }

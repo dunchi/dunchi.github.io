@@ -5,6 +5,7 @@ export const SITE = {
   author: '김한주',
   url: 'https://dunchi.github.io',
   github: 'https://github.com/dunchi',
+  email: 'pearl.dunchi@gmail.com',
 } as const;
 
 export const PAGE_SIZE = 10;
