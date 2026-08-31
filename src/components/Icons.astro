@@ -25,21 +25,15 @@ const { name, size = 24 } = Astro.props;
 )}
 
 {name === 'mic' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-    <path fill="#4285f4" d="M12 4.5a2.5 2.5 0 0 1 2.5 2.5v4.5a2.5 2.5 0 0 1-5 0V7A2.5 2.5 0 0 1 12 4.5z"/>
-    <path fill="none" stroke="#fbbc05" stroke-width="1.7" stroke-linecap="round" d="M7 11.2a5 5 0 0 0 5 5"/>
-    <path fill="none" stroke="#ea4335" stroke-width="1.7" stroke-linecap="round" d="M17 11.2a5 5 0 0 1-5 5"/>
-    <path fill="none" stroke="#34a853" stroke-width="1.7" stroke-linecap="round" d="M12 16.2v3.3"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
   </svg>
 )}
 
 {name === 'lens' && (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path stroke="#4285f4" stroke-width="1.7" stroke-linecap="round" d="M4 8.6V6.4A2.4 2.4 0 0 1 6.4 4h2.2"/>
-    <path stroke="#ea4335" stroke-width="1.7" stroke-linecap="round" d="M15.4 4h2.2A2.4 2.4 0 0 1 20 6.4v2.2"/>
-    <path stroke="#fbbc05" stroke-width="1.7" stroke-linecap="round" d="M20 15.4v2.2a2.4 2.4 0 0 1-2.4 2.4h-2.2"/>
-    <path stroke="#34a853" stroke-width="1.7" stroke-linecap="round" d="M8.6 20H6.4A2.4 2.4 0 0 1 4 17.6v-2.2"/>
-    <circle cx="12" cy="12" r="2.6" fill="#4285f4"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+    <path d="M4 8.6V6.4A2.4 2.4 0 0 1 6.4 4h2.2M15.4 4h2.2A2.4 2.4 0 0 1 20 6.4v2.2M20 15.4v2.2a2.4 2.4 0 0 1-2.4 2.4h-2.2M8.6 20H6.4A2.4 2.4 0 0 1 4 17.6v-2.2"/>
+    <circle cx="12" cy="12" r="2.8" fill="currentColor" stroke="none"/>
   </svg>
 )}
 
