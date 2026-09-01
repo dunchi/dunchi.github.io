@@ -106,7 +106,7 @@ const TOOLS = [
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
     />
     <style is:global>
-      @page { size: A4; margin: 13mm 14mm; }
+      @page { size: A4; margin: 11mm 13mm; }
       * { box-sizing: border-box; }
       html { background: #eceff3; }
       body {
@@ -118,7 +118,7 @@ const TOOLS = [
       }
       .sheet {
         max-width: 900px;
-        margin: 32px auto 80px;
+        margin: 40px auto 80px;
         background: #fff;
         padding: 52px 56px 60px;
         box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 12px 32px -12px rgba(0,0,0,.18);
@@ -189,17 +189,23 @@ const TOOLS = [
       .foot-note { margin: 12px 0 0; font-size: 12.5px; color: #8b929b; }
 
       /* ---------- 화면 전용 ---------- */
-      .bar { max-width: 900px; margin: 0 auto; padding: 18px 56px 0; display: flex;
-             justify-content: space-between; align-items: center; }
-      .bar a, .bar button { font-family: inherit; font-size: 13px; color: #4a5058; background: none;
+      .bar { display: contents; }
+      .bar a, .bar button { position: fixed; top: 40px; z-index: 5; }
+      .bar a { left: 28px; }
+      .bar button { right: 28px; }
+      .bar a, .bar button { font-family: inherit; font-size: 13px; color: #4a5058; background: #fff;
                             border: 1px solid #cfd5db; border-radius: 18px; padding: 7px 16px;
-                            cursor: pointer; text-decoration: none; }
+                            cursor: pointer; text-decoration: none; white-space: nowrap; }
       .bar button { color: #1a56b8; border-color: #b9cdec; background: #fff; font-weight: 500; }
       .bar a:hover, .bar button:hover { background: #f2f5f9; }
 
+      @media (max-width: 1060px) {
+        .bar { display: flex; max-width: 900px; margin: 0 auto; padding: 14px 22px 0;
+               justify-content: space-between; }
+        .bar a, .bar button { position: static; }
+      }
       @media (max-width: 760px) {
         .sheet { padding: 32px 22px 44px; margin: 0; box-shadow: none; }
-        .bar { padding: 14px 22px 0; }
         .rows { grid-template-columns: 1fr; }
         .rows dt { padding-bottom: 0; border-top: 1px solid #eceef1; }
         .rows dd { border-top: 0; padding-top: 2px; }
@@ -215,12 +221,38 @@ const TOOLS = [
         html, body { background: #fff; }
         .bar, .no-print { display: none !important; }
         .sheet { max-width: none; margin: 0; padding: 0; box-shadow: none; }
-        h2 { margin-top: 20px; }
+        body { font-size: 9.4pt; line-height: 1.42; }
+
+        .top { padding-bottom: 11px; }
+        .top h1 { font-size: 21pt; }
+        .top .role { font-size: 10pt; margin-top: 3px; }
+        .top .contact { font-size: 8.6pt; line-height: 1.6; }
+
+        h2 { margin: 15px 0 7px; font-size: 9.6pt; }
+        .blk { margin-top: 11px; }
+        .blk h3 { font-size: 9.8pt; margin-bottom: 4px; }
+
+        .lead { gap: 4px; }
+        .lead li { font-size: 9.2pt; line-height: 1.5; padding-left: 13px; }
+        .lead li::before { top: 7px; width: 5px; height: 5px; }
+
+        .rows { grid-template-columns: 104px 1fr; }
+        .rows dt { font-size: 9.2pt; padding: 3.5px 12px 3.5px 0; }
+        .rows dd { font-size: 9.2pt; line-height: 1.5; padding: 3.5px 0; }
+        .built { padding: 3px 13px 5px; }
+
+        .co { margin-top: 15px; padding-bottom: 4px; }
+        .co .name { font-size: 12.5pt; }
+        .co .when { font-size: 8.8pt; }
+        .co-role { margin-top: 4px; font-size: 8.8pt; }
+
+        .metrics { margin: 9px 0 4px; }
+        .metrics div { padding: 7px 11px; }
+        .metrics .n { font-size: 14pt; }
+        .metrics .l { font-size: 8pt; margin-top: 1px; }
+
         .co, .metrics, .built, .blk { break-inside: avoid; }
         .co { break-after: avoid; }
-        .top h1 { font-size: 25pt; }
-        body { font-size: 10pt; line-height: 1.55; }
-        .lead li, .rows dd { font-size: 9.8pt; }
       }
     </style>
   </head>
