@@ -312,8 +312,9 @@
 }
 /* 실측 간격: 대→대 34, 대→소 30, 소→소 22, 소→대 29, ?→그룹 29~30 */
 .cs__major + .cs__major { margin-top: 11px; }
-.cs__major + .cs__minor,
-.cs__minor + .cs__major { margin-top: 7px; }
+/* 소분류가 .cs__sub 로 감싸졌으므로 그 래퍼를 기준으로 잡는다 */
+.cs__major + .cs__sub,
+.cs__sub + .cs__major { margin-top: 7px; }
 /* 하위 목록은 한 겹씩 들여쓰면서 세로선을 하나 긋는다.
    중첩이 곧 깊이라 몇 겹이든 조상 선이 저절로 겹쳐 그려진다. */
 .cs__sub {
