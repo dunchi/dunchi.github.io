@@ -1,0 +1,144 @@
+/* 이력서 페이지. 문서로 읽히는 게 목적이라 구글 UI 보다 가독성을 우선한다.
+   화면과 인쇄 둘 다에서 쓸 수 있게 print 규칙을 함께 둔다. */
+
+.cv {
+  flex: 1;
+  padding: 40px 20px 80px 180px;
+  max-width: 1000px;
+}
+.cv__inner { max-width: 720px; }
+
+.cv__head { padding-bottom: 20px; border-bottom: 2px solid var(--text); }
+.cv__head h1 {
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text);
+}
+.cv__role { margin: 6px 0 0; font-size: 15px; color: var(--text-2); }
+.cv__contact { margin: 8px 0 0; font-size: 13.5px; color: var(--muted); }
+.cv__contact a { color: var(--link); }
+.cv__contact a:hover { text-decoration: underline; }
+
+.cv section { margin-top: 34px; }
+.cv h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--foot-border);
+  margin-bottom: 12px;
+}
+.cv h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 20px 0 6px;
+}
+
+.cv__list { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.cv__list li { position: relative; padding-left: 14px; font-size: 14.5px; line-height: 1.72; color: var(--text-2); }
+.cv__list li::before { content: '·'; position: absolute; left: 3px; color: var(--muted); }
+.cv__list b { color: var(--text); font-weight: 700; }
+
+/* 직접 만든 것 — 시선이 여기 먼저 가야 한다 */
+.cv__owned {
+  border-left: 3px solid var(--link);
+  padding: 10px 0 10px 16px;
+  margin-top: 8px;
+}
+
+.cv__table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 4px; }
+.cv__table th, .cv__table td {
+  border: 1px solid var(--foot-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.6;
+}
+.cv__table th {
+  width: 128px;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--pill-bg);
+}
+.cv__table td { color: var(--text-2); }
+.cv__table b { color: var(--text); }
+.cv__tools th { width: 250px; font-weight: 400; }
+.cv__tools th a { color: var(--link); }
+.cv__tools th a:hover { text-decoration: underline; }
+
+.cv__co {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--foot-border);
+}
+.cv__co-name { font-size: 17px; font-weight: 700; color: var(--text); }
+.cv__co-when { font-size: 13px; color: var(--muted); }
+.cv__co-desc { margin: 7px 0 10px; font-size: 13.5px; color: var(--muted); }
+
+/* 숫자 네 칸 */
+.cv__metrics {
+  display: flex;
+  border: 1px solid var(--foot-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px 0 6px;
+}
+.cv__metrics > div {
+  flex: 1;
+  padding: 12px 14px;
+  border-right: 1px solid var(--foot-border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cv__metrics > div:last-child { border-right: 0; }
+.cv__metrics .n { font-size: 21px; font-weight: 700; color: var(--link); line-height: 1.15; }
+.cv__metrics .l { font-size: 11.5px; color: var(--muted); }
+
+.cv__note { margin: 0 0 10px; font-size: 13.5px; color: var(--muted); }
+
+.cv__print { margin-top: 40px; }
+.cv__print button {
+  height: 36px;
+  padding: 0 20px;
+  border: 1px solid var(--foot-border);
+  border-radius: 18px;
+  background: none;
+  color: var(--link);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.cv__print button:hover { background: var(--hover-veil); }
+
+@media (max-width: 900px) {
+  .cv { padding-left: 20px; }
+  .cv__metrics { flex-wrap: wrap; }
+  .cv__metrics > div { flex: 1 1 45%; }
+  .cv__table th { width: 92px; }
+  .cv__tools th { width: auto; }
+}
+
+/* ---------- 인쇄 ---------- */
+@media print {
+  .topbar, .serp-head, .foot, .compose, .mdlg, .cv__print { display: none !important; }
+  body { background: #fff !important; color: #111 !important; }
+  .cv { padding: 0; max-width: none; }
+  .cv__inner { max-width: none; }
+  .cv section { margin-top: 22px; break-inside: avoid; }
+  .cv__co { break-after: avoid; }
+  .cv__metrics { break-inside: avoid; }
+  .cv h1 { font-size: 26pt; }
+  .cv__list li, .cv__table { font-size: 10pt; }
+}
