@@ -11,6 +11,13 @@ const { q = '', search = false } = Astro.props;
 ---
 <header class:list={['topbar', search && 'topbar--serp']}>
   <nav class="topbar__left">
+    {search && (
+      <button class="iconbtn topbar__burger" type="button" aria-label="탐색 메뉴" aria-expanded="true" data-sb-toggle>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20 5H4a1 1 0 000 2h16a1 1 0 100-2Zm0 6H4a1 1 0 000 2h16a1 1 0 000-2Zm0 6H4a1 1 0 000 2h16a1 1 0 000-2Z"/>
+        </svg>
+      </button>
+    )}
     {search && <a class="topbar__logo" href={url('/')} aria-label={`${SITE.title} 홈페이지로 이동`}><Wordmark /></a>}
   </nav>
   {search && <SearchBox value={q} />}
@@ -26,3 +33,18 @@ const { q = '', search = false } = Astro.props;
     <AccountButton />
   </nav>
 </header>
+
+<script>
+  /* 사이드바 접기. 유튜브처럼 상태를 기억한다. */
+  const KEY = 'sb-off';
+  const apply = (off: boolean) => {
+    document.body.classList.toggle('sb-off', off);
+    document.querySelector('[data-sb-toggle]')?.setAttribute('aria-expanded', String(!off));
+  };
+  try { apply(localStorage.getItem(KEY) === '1'); } catch {}
+  document.querySelector('[data-sb-toggle]')?.addEventListener('click', () => {
+    const off = !document.body.classList.contains('sb-off');
+    apply(off);
+    try { localStorage.setItem(KEY, off ? '1' : '0'); } catch {}
+  });
+</script>

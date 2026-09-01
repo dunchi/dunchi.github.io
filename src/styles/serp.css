@@ -234,3 +234,151 @@
   .serp-head__in { padding-left: 20px; gap: 16px; }
   .serp-tabs { padding-left: 20px; }
 }
+
+/* =========================================================
+   카테고리 사이드바
+   틀은 유튜브 실측(폭 240 / 고정 / 섹션 구분선),
+   안쪽 위계는 티스토리 실측:
+     전체   14px 400 #777
+     그룹   16px 700 #1d1d1f  "----- dev ↓ -----"
+     대분류 14px 700 #777      행 23 / 간격 34
+     소분류 13px 400 #86868b   행 22 / 좌 +22
+     Tag    제목 14px 500, 태그 13px 400, 크기는 같고 색만 3단계
+   ========================================================= */
+.cs {
+  position: fixed;
+  /* 상단바 56 + 탭줄 43 + 여백 = 헤더 실측 110 */
+  top: 110px;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  /* 아래 여유 120px 는 유튜브 사이드바 실측(padding: 0 0 120px) */
+  padding: 12px 12px 120px;
+  z-index: 5;
+  /* 유튜브 방식: 평소엔 스크롤바를 감추고 마우스가 올라오면 보인다 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  /* 유튜브 사이드바 실측 글꼴. 한글은 Roboto 에 글리프가 없어 Noto Sans KR 로 넘어간다 */
+  font-family: Roboto, 'Noto Sans KR', arial, sans-serif;
+  /* 소분류는 대분류보다 한 톤 연하다 (실측 #777 -> #86868b) */
+  --cs-sub: color-mix(in srgb, var(--muted) 82%, var(--bg));
+  --cs-bar: color-mix(in srgb, var(--muted) 70%, transparent);
+  --cs-line: color-mix(in srgb, var(--muted) 45%, transparent);
+}
+.cs:hover { scrollbar-color: var(--cs-bar) transparent; }
+.cs::-webkit-scrollbar { width: 8px; background: transparent; }
+.cs::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  transition: background .2s;
+}
+.cs:hover::-webkit-scrollbar-thumb { background: var(--cs-bar); }
+
+.cs a { display: block; text-decoration: none; }
+.cs a:hover { text-decoration: underline; }
+
+.cs__all {
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 23px;
+  margin-bottom: 11px;
+}
+/* 그룹 = 유튜브의 섹션. 제목 16px/500, 섹션 padding 12 + 아래 실선 (유튜브 실측) */
+.cs__sec {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--box-sep);
+}
+/* 태그 영역이 자기 실선을 가지므로 바로 위 섹션은 실선을 뺀다 */
+.cs__sec:has(+ .cs__tags) { border-bottom: 0; }
+.cs__group {
+  padding: 6px 12px 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+.cs__major {
+  /* 유튜브는 아이콘 자리만큼 항목이 제목보다 들어간다. 아이콘이 없으니 폭에 맞춰 24px */
+  padding-left: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  line-height: 23px;
+}
+/* 실측 간격: 대→대 34, 대→소 30, 소→소 22, 소→대 29, ?→그룹 29~30 */
+.cs__major + .cs__major { margin-top: 11px; }
+/* 소분류가 .cs__sub 로 감싸졌으므로 그 래퍼를 기준으로 잡는다 */
+.cs__major + .cs__sub,
+.cs__sub + .cs__major { margin-top: 7px; }
+/* 하위 목록은 한 겹씩 들여쓰면서 세로선을 하나 긋는다.
+   중첩이 곧 깊이라 몇 겹이든 조상 선이 저절로 겹쳐 그려진다. */
+.cs__sub {
+  margin-left: 32px;
+  border-left: 1px solid var(--cs-line);
+}
+.cs__minor {
+  position: relative;
+  padding-left: 14px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cs-sub);
+  line-height: 22px;
+}
+/* 가로 가지 */
+.cs__minor::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 9px;
+  height: 1px;
+  background: var(--cs-line);
+}
+/* 마지막 항목 아래로 세로선이 삐져나오지 않게 덮는다.
+   (마지막 항목이 다시 자식을 갖는 경우는 아직 데이터에 없다) */
+.cs__minor.is-last::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: var(--bg);
+}
+
+.cs__tags { padding: 0 12px; margin-top: 12px; border-top: 1px solid var(--box-sep); padding-top: 16px; }
+.cs__tagt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.cs__cloud { line-height: 24px; }
+.cs__tag {
+  display: inline !important;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 4px;
+}
+.cs__tag--1 { color: var(--text); }
+.cs__tag--3 { color: var(--muted); }
+.cs__tag--5 { color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
+
+/* 사이드바가 있는 화면만 본문을 민다 */
+.serp--sidebar { padding-left: 264px; }
+
+/* 접힘 상태 — 사이드바를 숨기고 본문은 원래 구글 정렬(180)로 돌아간다 */
+body.sb-off .cs { display: none; }
+body.sb-off .serp--sidebar { padding-left: 180px; }
+
+/* 햄버거는 유튜브 실측: 버튼 40x40 / padding 8 / 아이콘 24, 로고와 간격 0 */
+.topbar__burger { margin-right: 0; }
+
+/* 사이드바가 푸터를 덮지 않게. (.foot 자체는 base.css 소관이라
+   여기서는 쌓임 맥락만 만들어 준다 — serp.css 가 나중에 import 된다) */
+.foot { position: relative; z-index: 6; }
