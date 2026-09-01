@@ -72,7 +72,7 @@ const PAST = [
     role: 'C# Windows 응용프로그램 · Java 웹 풀스택 · 프로젝트 리딩',
     items: [
       ['상용 솔루션', '설계도면 자동화(ESDI) — 현대·포스코 등 대형 건설사 현장 도입, <b>일본·중국 수출</b> 기여'],
-      ['온디바이스', '공사현장 <b>360도 CCTV 시스템</b> — 시판 카메라에 <b>직접 탑재되는 프로그램</b>을 개발. 소켓 통신 실시간 처리, <b>24시간 무중단</b> 동작'],
+      ['온디바이스', '공사현장 <b>360도 CCTV 시스템</b> — 상용 <b>Android 기반 카메라에 직접 탑재되는 앱</b>을 개발. 소켓 통신 실시간 처리, <b>24시간 무중단</b> 동작'],
       ['리딩', '프로젝트 리드로 후임 1인 관리·멘토링'],
       ['공공 · DB', '정부 재난 시뮬레이션(Java/Spring) · 고경력 DBA 협업으로 대용량 튜닝·백업 전략 습득'],
     ],
@@ -80,14 +80,14 @@ const PAST = [
 ];
 
 const TOOLS = [
-  ['swagger-change-notifier', 'API 스펙 변경 감지·알림'],
-  ['spring-config-crypto-editor', 'Spring Cloud Config 암복호화 편집기'],
-  ['hurl-ide', 'HTTP 테스트 도구'],
-  ['github-issue-browser-app', 'GitHub 이슈 브라우저'],
-  ['overtime-report', '근태·초과근무 집계 자동화'],
-  ['server-maintenance', '서버 점검 스크립트'],
-  ['template-java-web', 'Java 웹 프로젝트 템플릿'],
-  ['mlx-whisper', '로컬 음성 인식'],
+  ['swagger-change-notifier', 'MSA Swagger 스펙 변경 자동 감지 → Slack 알림', 'Python'],
+  ['spring-config-crypto-editor', 'Spring Security Encryptors 호환 암·복호화 편집기 (AES-256-CBC / PBKDF2)', 'Electron'],
+  ['hurl-ide', '터미널과 hurl 파일 에디터를 통합한 API 테스트 도구', 'Electron'],
+  ['github-commit-tracker', 'GitHub 조직·로컬 저장소의 커밋을 수집해 정리', 'Python'],
+  ['github-issue-browser-app', 'GitHub 이슈 페이지 전용 맞춤 브라우저', 'Electron'],
+  ['overtime-report', '추가근무 보고서 자동 생성', 'Python'],
+  ['attendance-reminder', 'Windows 출근 시간 자동 기록', 'C#'],
+  ['productivity-toolkit', '반복 작업을 줄이는 생산성 도구 모음', 'C#'],
 ];
 ---
 
@@ -179,7 +179,11 @@ const TOOLS = [
       .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
       .tools .t { display: grid; grid-template-columns: 1fr; padding: 6px 0; border-top: 1px solid #eceef1; }
       .tools .t:nth-child(1), .tools .t:nth-child(2) { border-top: 0; }
-      .tools .n { font-size: 13px; font-weight: 500; color: #1a56b8; }
+      .tools .nl { display: flex; align-items: baseline; gap: 7px; }
+      .tools .n { font-size: 13px; font-weight: 500; color: #1a56b8; text-decoration: none; }
+      .tools .n:hover { text-decoration: underline; }
+      .tools .lang { font-style: normal; font-size: 10.5px; color: #6a727c;
+                     background: #f1f3f6; border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
       .tools .d { font-size: 12.5px; color: #6a727c; }
 
       .foot-note { margin: 12px 0 0; font-size: 12.5px; color: #8b929b; }
@@ -301,14 +305,14 @@ const TOOLS = [
       <section>
         <h2>개인 프로젝트 · 도구</h2>
         <div class="tools">
-          {TOOLS.map(([n, d]) => (
+          {TOOLS.map(([n, d, lang]) => (
             <div class="t">
-              <a class="n" href={`${SITE.github}/${n}`}>{n}</a>
+              <span class="nl"><a class="n" href={`${SITE.github}/${n}`}>{n}</a><em class="lang">{lang}</em></span>
               <span class="d">{d}</span>
             </div>
           ))}
         </div>
-        <p class="foot-note">불편을 느끼면 도구를 만들어 해결합니다. 전체 목록은 github.com/dunchi 에 있습니다.</p>
+        <p class="foot-note">업무 중 불편을 느끼면 도구를 만들어 해결합니다. 전부 직접 만들어 실제로 쓰고 있는 것들입니다.</p>
       </section>
 
       <section>
