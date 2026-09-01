@@ -43,24 +43,27 @@ if (!items) {
 const at = (path: string) => counts?.get(path) ?? 0;
 ---
 {items ? (
-  items.map((c) => (
+  items.map((c, i) => (
     <>
       <a
-        class={depth === 0 ? 'cs__major' : 'cs__minor'}
-        style={depth > 1 ? `--d:${depth - 1}` : undefined}
+        class:list={[depth === 0 ? 'cs__major' : 'cs__minor', i === items.length - 1 && 'is-last']}
         href={url('/category/' + base + '/' + c.dir)}
       >{c.name} ({at(base + '/' + c.dir)})</a>
-      {c.children && <Astro.self items={c.children} base={base + '/' + c.dir} depth={depth + 1} counts={counts} />}
+      {c.children && (
+        <div class="cs__sub">
+          <Astro.self items={c.children} base={base + '/' + c.dir} depth={depth + 1} counts={counts} />
+        </div>
+      )}
     </>
   ))
 ) : (
   <nav class="cs" aria-label="카테고리">
     <a class="cs__all" href={url('/')}>{SITE.title} ({total})</a>
     {GROUPS.map((g) => (
-      <>
-        <div class="cs__group">----- {g.name} ↓ -----</div>
+      <div class="cs__sec">
+        <div class="cs__group">{g.name}</div>
         <Astro.self items={g.items} base={g.dir} depth={0} counts={counts} />
-      </>
+      </div>
     ))}
 
     <div class="cs__tags">

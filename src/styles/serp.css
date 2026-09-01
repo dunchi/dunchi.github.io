@@ -261,9 +261,12 @@
   /* 유튜브 방식: 평소엔 스크롤바를 감추고 마우스가 올라오면 보인다 */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+  /* 유튜브 사이드바 실측 글꼴. 한글은 Roboto 에 글리프가 없어 Noto Sans KR 로 넘어간다 */
+  font-family: Roboto, 'Noto Sans KR', arial, sans-serif;
   /* 소분류는 대분류보다 한 톤 연하다 (실측 #777 -> #86868b) */
   --cs-sub: color-mix(in srgb, var(--muted) 82%, var(--bg));
   --cs-bar: color-mix(in srgb, var(--muted) 70%, transparent);
+  --cs-line: color-mix(in srgb, var(--muted) 45%, transparent);
 }
 .cs:hover { scrollbar-color: var(--cs-bar) transparent; }
 .cs::-webkit-scrollbar { width: 8px; background: transparent; }
@@ -278,20 +281,30 @@
 .cs a:hover { text-decoration: underline; }
 
 .cs__all {
+  padding: 0 12px;
   font-size: 14px;
   font-weight: 400;
   color: var(--muted);
   line-height: 23px;
   margin-bottom: 11px;
 }
+/* 그룹 = 유튜브의 섹션. 제목 16px/500, 섹션 padding 12 + 아래 실선 (유튜브 실측) */
+.cs__sec {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--box-sep);
+}
+/* 태그 영역이 자기 실선을 가지므로 바로 위 섹션은 실선을 뺀다 */
+.cs__sec:has(+ .cs__tags) { border-bottom: 0; }
 .cs__group {
+  padding: 6px 12px 4px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text);
-  line-height: 18.4px;
   white-space: nowrap;
 }
 .cs__major {
+  /* 유튜브는 아이콘 자리만큼 항목이 제목보다 들어간다. 아이콘이 없으니 폭에 맞춰 24px */
+  padding-left: 24px;
   font-size: 14px;
   font-weight: 700;
   color: var(--muted);
@@ -300,37 +313,54 @@
 /* 실측 간격: 대→대 34, 대→소 30, 소→소 22, 소→대 29, ?→그룹 29~30 */
 .cs__major + .cs__major { margin-top: 11px; }
 .cs__major + .cs__minor,
-.cs__minor + .cs__major,
-.cs__all + .cs__group,
-.cs__minor + .cs__group,
-.cs__major + .cs__group { margin-top: 7px; }
+.cs__minor + .cs__major { margin-top: 7px; }
+/* 하위 목록은 한 겹씩 들여쓰면서 세로선을 하나 긋는다.
+   중첩이 곧 깊이라 몇 겹이든 조상 선이 저절로 겹쳐 그려진다. */
+.cs__sub {
+  margin-left: 32px;
+  border-left: 1px solid var(--cs-line);
+}
 .cs__minor {
-  font-size: 13px;
+  position: relative;
+  padding-left: 14px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--cs-sub);
   line-height: 22px;
-  /* 22px 들여쓰기 + 깊이가 더 있으면 그만큼 더 (재귀라 몇 겹이든 따라온다) */
-  padding-left: calc(22px + var(--d, 0) * 14px);
-  position: relative;
 }
+/* 가로 가지 */
 .cs__minor::before {
-  content: '\2013';
+  content: '';
   position: absolute;
-  left: calc(8px + var(--d, 0) * 14px);
-  color: var(--cs-sub);
+  left: 0;
+  top: 11px;
+  width: 9px;
+  height: 1px;
+  background: var(--cs-line);
+}
+/* 마지막 항목 아래로 세로선이 삐져나오지 않게 덮는다.
+   (마지막 항목이 다시 자식을 갖는 경우는 아직 데이터에 없다) */
+.cs__minor.is-last::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: var(--bg);
 }
 
-.cs__tags { margin-top: 28px; border-top: 1px solid var(--box-sep); padding-top: 16px; }
+.cs__tags { padding: 0 12px; margin-top: 12px; border-top: 1px solid var(--box-sep); padding-top: 16px; }
 .cs__tagt {
   font-size: 14px;
   font-weight: 500;
   color: var(--text);
   margin: 0 0 8px;
 }
-.cs__cloud { line-height: 22px; }
+.cs__cloud { line-height: 24px; }
 .cs__tag {
   display: inline !important;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   margin-right: 4px;
 }
