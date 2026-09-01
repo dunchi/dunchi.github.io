@@ -8,7 +8,6 @@
 import { GROUPS, type Category } from '../data/categories';
 import { getPosts, tagCounts } from '../lib/posts';
 import { url } from '../lib/url';
-import { SITE } from '../consts';
 
 interface Props { items?: Category[]; base?: string; depth?: number; counts?: Map<string, number> }
 const { items, base = '', depth = 0 } = Astro.props;
@@ -57,8 +56,9 @@ const at = (path: string) => counts?.get(path) ?? 0;
     </>
   ))
 ) : (
+  <>
+  <a class="cs__all" href={url('/')}>전체글 ({total})</a>
   <nav class="cs" aria-label="카테고리">
-    <a class="cs__all" href={url('/')}>{SITE.title} ({total})</a>
     {GROUPS.map((g) => (
       <div class="cs__sec">
         <div class="cs__group">{g.name}</div>
@@ -75,4 +75,5 @@ const at = (path: string) => counts?.get(path) ?? 0;
       </div>
     </div>
   </nav>
+  </>
 )}
