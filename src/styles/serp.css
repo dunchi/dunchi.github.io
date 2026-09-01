@@ -255,8 +255,9 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--bg);
-  /* 아래 여유 120px 는 유튜브 사이드바 실측(padding: 0 0 120px) */
-  padding: 12px 12px 120px;
+  /* 아래 여유 120px 는 유튜브 사이드바 실측(padding: 0 0 120px).
+     위 14px 은 첫 그룹 제목을 본문 "검색결과 약 N개" 와 같은 줄에 앉히려고 잰 값 */
+  padding: 14px 12px 120px;
   z-index: 5;
   /* 유튜브 방식: 평소엔 스크롤바를 감추고 마우스가 올라오면 보인다 */
   scrollbar-width: thin;
@@ -280,15 +281,25 @@
 .cs a { display: block; text-decoration: none; }
 .cs a:hover { text-decoration: underline; }
 
+/* 사이드바 위 헤더 빈칸(탭줄과 같은 줄)에 얹는다.
+   탭줄 y=66 실측, 링크와 같은 padding 을 줘서 탭 글자와 같은 선에 앉는다.
+   헤더(.serp-head)가 z-index 10 이라 그보다 위. */
 .cs__all {
-  padding: 0 12px;
+  position: fixed;
+  top: 66px;
+  left: 0;
+  width: 240px;
+  box-sizing: border-box;
+  /* 들여쓰기는 그룹 제목(12+12=24)과 맞춘다 */
+  padding: 8px 12px 12px 24px;
+  background: var(--bg);
+  z-index: 11;
   font-size: 14px;
   font-weight: 400;
   color: var(--muted);
-  line-height: 23px;
-  margin-bottom: 11px;
 }
 /* 그룹 = 유튜브의 섹션. 제목 16px/500, 섹션 padding 12 + 아래 실선 (유튜브 실측) */
+.cs__sec:first-of-type { padding-top: 0; }
 .cs__sec {
   padding: 12px 0;
   border-bottom: 1px solid var(--box-sep);
@@ -377,7 +388,8 @@
 body:has(.cs) .serp-tabs { padding-left: 252px; }
 
 /* 접힘 상태 — 사이드바를 숨기고 본문·탭 모두 원래 구글 정렬로 돌아간다 */
-body.sb-off .cs { display: none; }
+body.sb-off .cs,
+body.sb-off .cs__all { display: none; }
 body.sb-off .serp--sidebar { padding-left: 180px; }
 body.sb-off .serp-tabs { padding-left: 167px; }
 
