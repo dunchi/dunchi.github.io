@@ -213,7 +213,7 @@ const TOOLS = [
       /* ---------- 인쇄 ---------- */
       @media print {
         html, body { background: #fff; }
-        .bar { display: none !important; }
+        .bar, .no-print { display: none !important; }
         .sheet { max-width: none; margin: 0; padding: 0; box-shadow: none; }
         h2 { margin-top: 20px; }
         .co, .metrics, .built, .blk { break-inside: avoid; }
@@ -302,7 +302,7 @@ const TOOLS = [
         ))}
       </section>
 
-      <section>
+      <section class="no-print">
         <h2>개인 프로젝트 · 도구</h2>
         <div class="tools">
           {TOOLS.map(([n, d, lang]) => (
