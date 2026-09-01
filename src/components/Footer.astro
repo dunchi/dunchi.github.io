@@ -1,10 +1,17 @@
 ---
 import { url } from '../lib/url';
 import { SITE } from '../consts';
+import { getPosts } from '../lib/posts';
+
+/* 첫 화면이 사라지면서 없어진 I'm Feeling Lucky 를 이 자리로 되살린다. */
+const luckyIds = (await getPosts()).map((p) => url('/post/' + p.id));
 ---
 <footer class="foot">
   <div class="foot__row">
-    <div class="foot__region">대한민국</div>
+    <ul>
+      <li><div class="foot__region">대한민국</div></li>
+      <li><button class="foot__btn" type="button" data-lucky>I'm Feeling Lucky</button></li>
+    </ul>
     <ul>
       <li><button class="foot__btn" type="button" data-info-open>개인정보처리방침</button></li>
       <li class="setmenu">
@@ -64,4 +71,11 @@ import { SITE } from '../consts';
   });
 
   label();
+</script>
+
+<script is:inline define:vars={{ luckyIds }}>
+  document.querySelector('[data-lucky]')?.addEventListener('click', () => {
+    if (!luckyIds.length) return;
+    location.href = luckyIds[Math.floor(Math.random() * luckyIds.length)];
+  });
 </script>
