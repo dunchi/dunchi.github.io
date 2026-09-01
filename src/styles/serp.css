@@ -234,3 +234,120 @@
   .serp-head__in { padding-left: 20px; gap: 16px; }
   .serp-tabs { padding-left: 20px; }
 }
+
+/* =========================================================
+   카테고리 사이드바
+   틀은 유튜브 실측(폭 240 / 고정 / 섹션 구분선),
+   안쪽 위계는 티스토리 실측:
+     전체   14px 400 #777
+     그룹   16px 700 #1d1d1f  "----- dev ↓ -----"
+     대분류 14px 700 #777      행 23 / 간격 34
+     소분류 13px 400 #86868b   행 22 / 좌 +22
+     Tag    제목 14px 500, 태그 13px 400, 크기는 같고 색만 3단계
+   ========================================================= */
+.cs {
+  position: fixed;
+  /* 상단바 56 + 탭줄 43 + 여백 = 헤더 실측 110 */
+  top: 110px;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  /* 아래 여유 120px 는 유튜브 사이드바 실측(padding: 0 0 120px) */
+  padding: 12px 12px 120px;
+  z-index: 5;
+  /* 유튜브 방식: 평소엔 스크롤바를 감추고 마우스가 올라오면 보인다 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  /* 소분류는 대분류보다 한 톤 연하다 (실측 #777 -> #86868b) */
+  --cs-sub: color-mix(in srgb, var(--muted) 82%, var(--bg));
+  --cs-bar: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+.cs:hover { scrollbar-color: var(--cs-bar) transparent; }
+.cs::-webkit-scrollbar { width: 8px; background: transparent; }
+.cs::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  transition: background .2s;
+}
+.cs:hover::-webkit-scrollbar-thumb { background: var(--cs-bar); }
+
+.cs a { display: block; text-decoration: none; }
+.cs a:hover { text-decoration: underline; }
+
+.cs__all {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 23px;
+  margin-bottom: 11px;
+}
+.cs__group {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 18.4px;
+  white-space: nowrap;
+}
+.cs__major {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  line-height: 23px;
+}
+/* 실측 간격: 대→대 34, 대→소 30, 소→소 22, 소→대 29, ?→그룹 29~30 */
+.cs__major + .cs__major { margin-top: 11px; }
+.cs__major + .cs__minor,
+.cs__minor + .cs__major,
+.cs__all + .cs__group,
+.cs__minor + .cs__group,
+.cs__major + .cs__group { margin-top: 7px; }
+.cs__minor {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--cs-sub);
+  line-height: 22px;
+  /* 22px 들여쓰기 + 깊이가 더 있으면 그만큼 더 (재귀라 몇 겹이든 따라온다) */
+  padding-left: calc(22px + var(--d, 0) * 14px);
+  position: relative;
+}
+.cs__minor::before {
+  content: '\2013';
+  position: absolute;
+  left: calc(8px + var(--d, 0) * 14px);
+  color: var(--cs-sub);
+}
+
+.cs__tags { margin-top: 28px; border-top: 1px solid var(--box-sep); padding-top: 16px; }
+.cs__tagt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.cs__cloud { line-height: 22px; }
+.cs__tag {
+  display: inline !important;
+  font-size: 13px;
+  font-weight: 400;
+  margin-right: 4px;
+}
+.cs__tag--1 { color: var(--text); }
+.cs__tag--3 { color: var(--muted); }
+.cs__tag--5 { color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
+
+/* 사이드바가 있는 화면만 본문을 민다 */
+.serp--sidebar { padding-left: 264px; }
+
+/* 접힘 상태 — 사이드바를 숨기고 본문은 원래 구글 정렬(180)로 돌아간다 */
+body.sb-off .cs { display: none; }
+body.sb-off .serp--sidebar { padding-left: 180px; }
+
+/* 햄버거는 유튜브 실측: 버튼 40x40 / padding 8 / 아이콘 24, 로고와 간격 0 */
+.topbar__burger { margin-right: 0; }
+
+/* 사이드바가 푸터를 덮지 않게. (.foot 자체는 base.css 소관이라
+   여기서는 쌓임 맥락만 만들어 준다 — serp.css 가 나중에 import 된다) */
+.foot { position: relative; z-index: 6; }

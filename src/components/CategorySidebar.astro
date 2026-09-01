@@ -1,0 +1,75 @@
+---
+/* 카테고리 사이드바.
+   틀(폭 240 / 고정 배치)은 유튜브 실측, 안쪽 위계와 글 수 표기는
+   티스토리 aiwcpd.tistory.com 실측을 그대로 옮겼다.
+
+   items 가 오면 그 목록만 그리고, 없으면 전체를 그린다 —
+   Astro.self 로 자기를 다시 부르므로 계층이 몇 겹이든 따라간다. */
+import { GROUPS, type Category } from '../data/categories';
+import { getPosts, tagCounts } from '../lib/posts';
+import { url } from '../lib/url';
+import { SITE } from '../consts';
+
+interface Props { items?: Category[]; base?: string; depth?: number; counts?: Map<string, number> }
+const { items, base = '', depth = 0 } = Astro.props;
+
+/* 글 수는 폴더 위치로 센다. 상위 카테고리는 하위 글까지 합산 —
+   티스토리가 Unity (30) = 9+8+13 으로 보여주던 것과 같다. */
+let counts = Astro.props.counts;
+let total = 0;
+let cloud: { tag: string; level: 1 | 3 | 5 }[] = [];
+
+if (!items) {
+  const posts = await getPosts();
+  total = posts.length;
+  counts = new Map<string, number>();
+  for (const p of posts) {
+    const i = p.id.lastIndexOf('/');
+    if (i < 0) continue;
+    const seg = p.id.slice(0, i).split('/');
+    for (let n = 1; n <= seg.length; n++) {
+      const key = seg.slice(0, n).join('/');
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  /* 태그 구름: 티스토리는 크기가 아니라 색 3단계로 빈도를 보여준다 */
+  const tags = tagCounts(posts).slice(0, 15);
+  const max = tags[0]?.count ?? 1;
+  cloud = tags.map(({ tag, count }) => ({
+    tag,
+    level: count >= max * 0.66 ? 1 : count >= max * 0.33 ? 3 : 5,
+  }));
+}
+const at = (path: string) => counts?.get(path) ?? 0;
+---
+{items ? (
+  items.map((c) => (
+    <>
+      <a
+        class={depth === 0 ? 'cs__major' : 'cs__minor'}
+        style={depth > 1 ? `--d:${depth - 1}` : undefined}
+        href={url('/category/' + base + '/' + c.dir)}
+      >{c.name} ({at(base + '/' + c.dir)})</a>
+      {c.children && <Astro.self items={c.children} base={base + '/' + c.dir} depth={depth + 1} counts={counts} />}
+    </>
+  ))
+) : (
+  <nav class="cs" aria-label="카테고리">
+    <a class="cs__all" href={url('/')}>{SITE.title} ({total})</a>
+    {GROUPS.map((g) => (
+      <>
+        <div class="cs__group">----- {g.name} ↓ -----</div>
+        <Astro.self items={g.items} base={g.dir} depth={0} counts={counts} />
+      </>
+    ))}
+
+    <div class="cs__tags">
+      <h3 class="cs__tagt">Tag</h3>
+      <div class="cs__cloud">
+        {cloud.map(({ tag, level }) => (
+          <><a class={'cs__tag cs__tag--' + level} href={url('/tags/' + encodeURIComponent(tag))}>{tag},</a>{' '}</>
+        ))}
+      </div>
+    </div>
+  </nav>
+)}
