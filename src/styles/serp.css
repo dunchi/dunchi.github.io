@@ -372,9 +372,14 @@
 /* 사이드바가 있는 화면만 본문을 민다 */
 .serp--sidebar { padding-left: 264px; }
 
-/* 접힘 상태 — 사이드바를 숨기고 본문은 원래 구글 정렬(180)로 돌아간다 */
+/* 사이드바가 있는 화면에서는 탭도 글 목록에 맞춰 민다.
+   탭 링크 자체가 좌우 12px padding 을 가지므로 264 - 12 = 252 */
+body:has(.cs) .serp-tabs { padding-left: 252px; }
+
+/* 접힘 상태 — 사이드바를 숨기고 본문·탭 모두 원래 구글 정렬로 돌아간다 */
 body.sb-off .cs { display: none; }
 body.sb-off .serp--sidebar { padding-left: 180px; }
+body.sb-off .serp-tabs { padding-left: 167px; }
 
 /* 햄버거는 유튜브 실측: 버튼 40x40 / padding 8 / 아이콘 24, 로고와 간격 0 */
 .topbar__burger { margin-right: 0; }
