@@ -167,7 +167,7 @@
   color: inherit;
   font-family: var(--sans);
   font-size: 14px;
-  line-height: inherit;
+  line-height: 20px;
   cursor: pointer;
 }
 .foot__btn:hover { text-decoration: underline; }
